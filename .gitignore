@@ -1,0 +1,43 @@
+# Laravel-specific files
+/public/build
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+/bootstrap/cache/*
+/.env
+/.phpunit.result.cache
+
+# Ignorer le dossier node_modules
+/node_modules
+
+# Ignorer les fichiers de debug ou logs spécifiques
+npm-debug.log
+yarn-error.log
+composer.lock.bak
+
+# Fichiers générés par des éditeurs
+/.vscode/
+/.idea/
+/.fleet/
+/.zed
+
+# Ignorer les fichiers système
+.DS_Store
+Thumbs.db
+
+# Ignorer Homestead et autres fichiers de configuration locaux
+Homestead.json
+Homestead.yaml
+
+# Cache et fichiers temporaires de PHP
+/.phpunit.cache
+.phpunit.result.cache
+
+# Autres fichiers spécifiques aux outils de dev
+.phpactor.json
+auth.json
+
+# Ignorer les fichiers et répertoires inutiles de GitHub Copilot et JetBrains (PHPStorm)
+/.copilot
+/.phpstorm.meta.php
