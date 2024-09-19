@@ -6,24 +6,24 @@
 
             <!-- Dropdown Recettes -->
             <div class="relative group">
-                <button class="text-white font-bold focus:outline-none">
+                <button class="text-white font-bold focus:outline-none" onclick="toggleDropdown('recettesDropdown')">
                     Recettes
                 </button>
-                <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md mt-2">
-                    <a href="{{ route('recettes.index') }}" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Liste des recettes</a>
-                    <a href="{{ route('recettes.create') }}" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Ajouter une recette</a>
+                <div id="recettesDropdown" class="absolute hidden bg-gray-700 shadow-lg rounded-md mt-4 z-50 w-48 dropdown-content">
+                    <a href="{{ route('recettes.index') }}" class="block px-4 py-2 text-white hover:bg-indigo-500 hover:rounded-md">Liste des recettes</a>
+                    <a href="{{ route('recettes.create') }}" class="block px-4 py-2 text-white hover:bg-indigo-500 hover:rounded-md">Ajouter une recette</a>
                 </div>
             </div>
 
             <!-- Dropdown Ingrédients -->
             <div class="relative group">
-                <button class="text-white font-bold focus:outline-none">
+                <button class="text-white font-bold focus:outline-none"  onclick="toggleDropdown('ingredientsDropdown')">
                     Ingrédients
                 </button>
-                {{-- <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md mt-1">
-                    <a href="{{ route('ingredients.index') }}" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Liste des ingrédients</a>
-                    <a href="{{ route('ingredients.create') }}" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Ajouter un ingrédient</a>
-                </div> --}}
+                <div  id="ingredientsDropdown" class="absolute hidden bg-gray-700 shadow-lg rounded-md mt-4 z-50 w-48 dropdown-content">
+                    <a href="{{ route('ingredients.index') }}" class="block px-4 py-2 text-white hover:bg-indigo-500 hover:rounded-md">Liste des ingrédients</a>
+                    <a href="{{ route('ingredients.create') }}" class="block px-4 py-2 text-white hover:bg-indigo-500 hover:rounded-md">Ajouter un ingrédient</a>
+                </div>
             </div>
         </div>
 

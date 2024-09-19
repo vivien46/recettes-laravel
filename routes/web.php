@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\RecetteController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\IngredientController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -16,14 +17,12 @@ Route::post('/recettes', [RecetteController::class, 'store'])->name('recettes.st
 Route::put('/recettes/{id}', [RecetteController::class, 'update'])->name('recettes.update');
 Route::delete('/recettes/{id}', [RecetteController::class, 'destroy'])->name('recettes.destroy');
 
-/*
- TODO: Implémenter la gestion des ingrédients
+// Routes pour les ingrédients
+Route::get('/ingredients', [IngredientController::class, 'index'])->name('ingredients.index');
+Route::get('/ingredients/create', [IngredientController::class, 'create'])->name('ingredients.create');
+Route::get('/ingredients/{id}', [IngredientController::class, 'show'])->name('ingredients.show');
+Route::get('/ingredients/{id}/edit', [IngredientController::class, 'edit'])->name('ingredients.edit');
 
-TODO: Routes pour les ingrédients
-
-TODO: Route::get('/ingredients', [IngredientController::class, 'index'])->name('ingredients.index');
-
-TODO: Route::get('/ingredients/create', [IngredientController::class, 'create'])->name('ingredients.create');
-
-TODO: Ajouter d'autres routes pour la gestion des ingrédients (modification, suppression, etc.)
-*/
+Route::post('/ingredients', [IngredientController::class, 'store'])->name('ingredients.store');
+Route::put('/ingredients/{id}', [IngredientController::class, 'update'])->name('ingredients.update');
+Route::delete('/ingredients/{id}', [IngredientController::class, 'destroy'])->name('ingredients.destroy');
