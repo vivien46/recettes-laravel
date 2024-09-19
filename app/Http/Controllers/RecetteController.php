@@ -18,7 +18,8 @@ class RecetteController extends Controller
     // Afficher une seule recette
     public function show($id)
     {
-        $recipe = Recipe::with('ingredients')->findOrFail($id);
+        $recipe = Recipe::with(['ingredients' => function($query) {
+            $query->orderBy('recipe_ingredient.id', 'asc');}])->findOrFail($id);
         return view('recettes.show', compact('recipe'));
     }
 
@@ -44,31 +45,62 @@ class RecetteController extends Controller
             'type' => 'required',
             'ingredients' => 'required|array',
             'quantites' => 'required|array',
+            'unites' => 'required|array'
         ]);
 
         $userId = 3;
 
         // création de la recette
         $recipe = Recipe::create([
-                'titre' => $request->titre,
-                'description' => $request->description,
-                'temps_preparation' => $request->temps_preparation,
-                'temps_cuisson' => $request->temps_cuisson,
-                'temps_repos' => $request->temps_repos,
-                'temps_total' => $request->temps_total,
-                'portion' => $request->portion,
-                'difficulte' => $request->difficulte,
-                'type' => $request->type,
-                'user_id' => $userId,
+            'titre' => $request->titre,
+            'description' => $request->description,
+            'temps_preparation' => $request->temps_preparation,
+            'temps_cuisson' => $request->temps_cuisson,
+            'temps_repos' => $request->temps_repos,
+            'temps_total' => $request->temps_total,
+            'portion' => $request->portion,
+            'difficulte' => $request->difficulte,
+            'type' => $request->type,
+            'user_id' => $userId,
         ]);
 
         // ajout des ingrédients avec les quantités
         foreach ($request->ingredients as $ingredientId) {
-            $quantite = $request->quantites[$ingredientId] ?? null; // Récupérer la quantité pour cet ingrédient
-            $recipe->ingredients()->attach($ingredientId, ['quantite' => $quantite]);
+            // Récupérer la quantité et l'unité
+            $quantite = $request->quantites[$ingredientId] ?? null;
+            $unite = $request->unites[$ingredientId] ?? null;
+    
+            if ($quantite && $unite) {
+                // Manipulation des unités en fonction de la quantité
+                if ($quantite > 1) {
+                    switch ($unite) {
+                        case "cuillère à soupe":
+                        case "cuillère à café":
+                            $unite = "cuillères à " . explode(' ', $unite)[2];
+                            break;
+                        case "unité":
+                            $unite = "unités";
+                            break;
+                        case "feuille":
+                            $unite = "feuilles";
+                            break;
+                        case "tranche":
+                            $unite = "tranches";
+                            break;
+                        // Pas de modification pour les autres unités (g, kg, ml, etc.)
+                        default:
+                            break;
+                    }
+                }
+                 // Concaténer la quantité et l'unité
+            $quantite_avec_unite = $quantite . ' ' . $unite;
+
+            // Attacher l'ingrédient à la recette
+            $recipe->ingredients()->attach($ingredientId, ['quantite' => $quantite_avec_unite]);
+        }
         }
 
-        return redirect()->route('recettes.show', $recipe->id);
+        return redirect()->route('recettes.show', $recipe->id)->with('success', 'Recette créée avec succès.');
     }
 
     // Afficher le formulaire de modification d'une recette
@@ -92,10 +124,10 @@ class RecetteController extends Controller
             'ingredients' => 'required|array',
             'quantites' => 'required|array'
         ]);
-    
+
         // Récupérer la recette à modifier
         $recipe = Recipe::findOrFail($id);
-    
+
         // Mettre à jour les champs de la recette
         $recipe->update([
             'titre' => $request->input('titre'),
@@ -108,17 +140,17 @@ class RecetteController extends Controller
             'difficulte' => $request->input('difficulte'),
             'type' => $request->input('type'),
         ]);
-    
+
         // Mettre à jour les ingrédients associés avec leurs quantités
         $ingredients = [];
         foreach ($request->input('ingredients') as $ingredientId) {
             $ingredients[$ingredientId] = ['quantite' => $request->input('quantites')[$ingredientId]];
         }
         $recipe->ingredients()->sync($ingredients);
-    
+
         // Rediriger vers la page de la recette avec un message de succès
         return redirect()->route('recettes.show', $recipe->id)->with('success', 'Recette mise à jour avec succès.');
-    }    
+    }
 
     // Supprimer une recette
     public function destroy($id)

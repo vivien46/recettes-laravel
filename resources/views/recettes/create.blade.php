@@ -83,6 +83,20 @@
 
                         <!-- Champs pour la quantité associée à chaque ingrédient -->
                          <input type="text" name="quantites[{{ $ingredient->id }}]" placeholder="Quantité" class="ml-4 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+                         <!-- Selection de l'unité de mesure -->
+                          <select name="unites[{{ $ingredient->id }}]" class="ml-4 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="g">g</option>
+                            <option value="kg">kg</option>
+                            <option value="ml">ml</option>
+                            <option value="cl">cl</option>
+                            <option value="l">l</option>
+                            <option value="cuillère à soupe">cuillère à soupe</option>
+                            <option value="cuillère à café">cuillère à café</option>
+                            <option value="unité">unité</option>
+                            <option value="feuille">feuille</option>
+                            <option value="tranche">tranche(s)</option>
+                        </select>
                     </div>
                 @endforeach
             </div>
