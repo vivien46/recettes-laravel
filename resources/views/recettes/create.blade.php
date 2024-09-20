@@ -73,32 +73,21 @@
                 </select>
             </div>
 
-    <!-- Ingrédients (cases à cocher) avec quantité -->
+    <!-- Ingrédients barre de recherche avec quantité -->
     <div class="mb-6">
                 <h3 class="text-lg font-semibold text-gray-600 mb-2">Ingrédients</h3>
-                @foreach($ingredients as $ingredient)
-                    <div class="flex items-center mb-2">
-                        <input type="checkbox" name="ingredients[]" value="{{ $ingredient->id }}" id="ingredient_{{ $ingredient->id }}" class="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
-                        <label for="ingredient_{{ $ingredient->id }}" class="text-gray-600">{{ $ingredient->nom }}</label>
+                 <!-- Barre de recherche d'ingrédients -->
+            <div class="mb-4">
+                <label for="search-ingredient" class="block text-lg font-semibold text-gray-600 mb-2">Rechercher un ingrédient</label>
+                <input type="text" id="search-ingredient" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="Tapez un ingrédient..." autocomplete="off">
+                <div id="search-results" class="mt-2"></div> <!-- Conteneur pour afficher les résultats -->
+            </div>
 
-                        <!-- Champs pour la quantité associée à chaque ingrédient -->
-                         <input type="text" name="quantites[{{ $ingredient->id }}]" placeholder="Quantité" class="ml-4 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-
-                         <!-- Selection de l'unité de mesure -->
-                          <select name="unites[{{ $ingredient->id }}]" class="ml-4 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            <option value="g">g</option>
-                            <option value="kg">kg</option>
-                            <option value="ml">ml</option>
-                            <option value="cl">cl</option>
-                            <option value="l">l</option>
-                            <option value="cuillère à soupe">cuillère à soupe</option>
-                            <option value="cuillère à café">cuillère à café</option>
-                            <option value="unité">unité</option>
-                            <option value="feuille">feuille</option>
-                            <option value="tranche">tranche(s)</option>
-                        </select>
-                    </div>
-                @endforeach
+            <!-- Ingrédients sélectionnés -->
+            <div id="selected-ingredients" class="mb-6">
+                <h3 class="text-lg font-semibold text-gray-600 mb-2">Ingrédients sélectionnés :</h3>
+                <!-- Ici on affichera les ingrédients sélectionnés -->
+            </div>
             </div>
 
             <!-- Bouton de soumission -->
