@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Affiche les nouveaux résultats sous forme de mini-carte
                     data.forEach(ingredient => {
                         const ingredientCard = document.createElement('div');
-                        ingredientCard.classList.add('ingredient-card', 'p-2', 'bg-gray-100', 'rounded', 'mb-2', 'cursor-pointer');
+                        ingredientCard.classList.add('ingredient-card', 'p-2', 'bg-gray-300', 'rounded', 'mb-2', 'cursor-pointer');
 
                         // Afficher le nom de l'ingrédient
                         ingredientCard.textContent = ingredient.nom;
@@ -62,14 +62,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Créer un élément dans la liste des ingrédients sélectionnés
         const ingredientDiv = document.createElement('div');
-        ingredientDiv.classList.add('selected-ingredient', 'p-2', 'bg-green-100', 'rounded', 'mb-2');
+        ingredientDiv.classList.add('selected-ingredient', 'p-4', 'bg-green-100', 'rounded', 'mb-2');
         
         // Ajoute le nom de l'ingrédient
         ingredientDiv.innerHTML = `
         <span>${ingredientName}</span>
         <input type="hidden" name="ingredients[]" value="${ingredientId}">
         <input type="text" name="quantities[${ingredientId}]" placeholder="Quantité" class="ml-4 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-        <select name="unites[${ingredientId}]" class="ml-4 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-blue-500">
+        <select name="unites[${ingredientId}]" class="ml-4 p-2 text-center border border-gray-300 rounded-lg focus:outline-none focus:ring-blue-500">
             <option value="g">g</option>
             <option value="kg">kg</option>
             <option value="ml">ml</option>
@@ -81,6 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <option value="feuille">feuille</option>
             <option value="tranche">tranche</option>
         </select>
+        <button type="button" class="ml-2 px-2 button-md bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200" title="Supprimer l'ingrédient" onclick="this.parentElement.remove()">X</button>
     `;
     
     selectedIngredientsContainer.appendChild(ingredientDiv);
