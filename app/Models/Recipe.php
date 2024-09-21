@@ -20,4 +20,10 @@ class Recipe extends Model
                     ->withTimestamps();;
     }
 
+    // Relation avec Steps
+    public function steps()
+    {
+        return $this->hasMany(Step::class, 'recipe_id', 'id')->orderBy('order', 'asc');
+    }
+
 }

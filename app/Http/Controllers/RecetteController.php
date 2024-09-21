@@ -19,7 +19,10 @@ class RecetteController extends Controller
     public function show($id)
     {
         $recipe = Recipe::with(['ingredients' => function($query) {
-            $query->orderBy('recipe_ingredient.id', 'asc');}])->findOrFail($id);
+            $query->orderBy('recipe_ingredient.id', 'asc');
+        }, 'steps' => function($query) {
+            $query->orderBy('order', 'asc');  // Ajoute l'ordre des étapes
+        }])->findOrFail($id);
         return view('recettes.show', compact('recipe'));
     }
 
@@ -106,9 +109,24 @@ class RecetteController extends Controller
     // Afficher le formulaire de modification d'une recette
     public function edit($id)
     {
-        $recipe = Recipe::findOrFail($id);
+        $recipe = Recipe::with(['ingredients' => function($query) {
+            $query->orderBy('recipe_ingredient.id', 'asc');
+        }, 'steps' => function($query) {
+            $query->orderBy('order', 'asc');
+        }])->findOrFail($id);
 
         $ingredients = Ingredient::all();
+
+        // Parcourir chaque ingrédient pour séparer la quantité et l'unité
+        foreach ($recipe->ingredients as $ingredient) {
+            if (preg_match('/^(\d+(\.\d+)?)\s*(.*)$/', $ingredient->pivot->quantite, $matches)) {
+                $ingredient->pivot->quantite_numeric = $matches[1]; // La partie numérique de la quantité
+                $ingredient->pivot->quantite_unite = $matches[2];   // L'unité (g, kg, etc.)
+            } else {
+                $ingredient->pivot->quantite_numeric = $ingredient->pivot->quantite; // Si pas d'unité, mettre toute la quantité
+                $ingredient->pivot->quantite_unite = ''; // Pas d'unité trouvée
+            }
+        }
 
         return view('recettes.edit', compact('recipe', 'ingredients'));
     }
@@ -121,8 +139,17 @@ class RecetteController extends Controller
             'titre' => 'required|string|max:255',
             'description' => 'required|string',
             'temps_preparation' => 'required|integer',
+            'temps_cuisson' => 'required|integer',
+            'temps_repos' => 'required|integer',
+            'temps_total' => 'required|integer',
+            'portion' => 'required|integer',
+            'difficulte' => 'required|string',
+            'type' => 'required|string',
             'ingredients' => 'required|array',
-            'quantites' => 'required|array'
+            'quantites' => 'required|array',
+            'unites' => 'required|array',
+            'steps' => 'required|array',
+            'order' => 'required|array',
         ]);
 
         // Récupérer la recette à modifier
@@ -141,12 +168,24 @@ class RecetteController extends Controller
             'type' => $request->input('type'),
         ]);
 
-        // Mettre à jour les ingrédients associés avec leurs quantités
-        $ingredients = [];
-        foreach ($request->input('ingredients') as $ingredientId) {
-            $ingredients[$ingredientId] = ['quantite' => $request->input('quantites')[$ingredientId]];
-        }
-        $recipe->ingredients()->sync($ingredients);
+        // Mettre à jour les ingrédients
+    $recipe->ingredients()->detach();
+    foreach ($request->ingredients as $ingredientId) {
+        $quantite = $request->quantites[$ingredientId] ?? null;
+        $unite = $request->unites[$ingredientId] ?? null;
+        $quantite_avec_unite = $quantite . ' ' . $unite;
+        $recipe->ingredients()->attach($ingredientId, ['quantite' => $quantite_avec_unite]);
+    }
+
+    // Mettre à jour les étapes
+    $recipe->steps()->delete();
+    foreach ($request->steps as $index => $stepDescription) {
+        $ordre = $request->order[$index];
+        $recipe->steps()->create([
+            'description' => $stepDescription,
+            'order' => $ordre,
+        ]);
+    }
 
         // Rediriger vers la page de la recette avec un message de succès
         return redirect()->route('recettes.show', $recipe->id)->with('success', 'Recette mise à jour avec succès.');

@@ -30,7 +30,7 @@
                             <td class="px-4 py-2">{{ $ingredient->description }}</td>
                             <td class="px-4 py-2">
                                 <a href="{{ route('ingredients.show', $ingredient->id) }}" class="text-blue-600 hover:underline">Voir</a>
-                                <a href="{{ route('ingredients.edit', $ingredient->id) }}" class="text-yellow-600 hover:underline ml-4">Modifier</a>
+                                <a href="{{ route('ingredients.edit', $ingredient->id) }}" class="text-yellow-500 hover:underline ml-4">Modifier</a>
                                 <form action="{{ route('ingredients.destroy', $ingredient->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Voulez-vous vraiment supprimer cet ingrédient ?');">
                                     @csrf
                                     @method('DELETE')
