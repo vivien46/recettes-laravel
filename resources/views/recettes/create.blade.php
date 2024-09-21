@@ -6,55 +6,74 @@
     <div class="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-lg mt-10">
         <h1 class="text-3xl font-bold mb-6 text-gray-700">Ajouter une recette</h1>
 
+        <!-- Message sur les champs obligatoires -->
+        <p class="text-red-500 mb-4">Tous les champs marqués avec le symbole <span class="font-bold">*</span> sont obligatoires.</p>
+
         <form action="{{ route('recettes.store') }}" method="POST">
             @csrf
 
             <!-- Titre -->
             <div class="mb-4">
-                <label for="titre" class="block text-lg font-semibold text-gray-600 mb-2">Titre de la recette</label>
+                <label for="titre" class="block text-lg font-semibold text-gray-600 mb-2">
+                    Titre de la recette <span class="text-red-500">*</span>
+                </label>
                 <input type="text" name="titre" id="titre" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Entrez le titre de la recette" required>
             </div>
 
             <!-- Description -->
             <div class="mb-4">
-                <label for="description" class="block text-lg font-semibold text-gray-600 mb-2">Description</label>
+                <label for="description" class="block text-lg font-semibold text-gray-600 mb-2">
+                    Description <span class="text-red-500">*</span>
+                </label>
                 <textarea name="description" id="description" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Décrivez la recette" required></textarea>
             </div>
 
             <!-- Temps de préparation -->
             <div class="mb-4">
-                <label for="temps_preparation" class="block text-lg font-semibold text-gray-600 mb-2">Temps de préparation (minutes)</label>
+                <label for="temps_preparation" class="block text-lg font-semibold text-gray-600 mb-2">
+                    Temps de préparation (minutes)
+                </label>
                 <input type="number" name="temps_preparation" id="temps_preparation" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ex : 20">
             </div>
 
             <!-- Temps de cuisson -->
             <div class="mb-4">
-                <label for="temps_cuisson" class="block text-lg font-semibold text-gray-600 mb-2">Temps de cuisson (minutes)</label>
+                <label for="temps_cuisson" class="block text-lg font-semibold text-gray-600 mb-2">
+                    Temps de cuisson (minutes)
+                </label>
                 <input type="number" name="temps_cuisson" id="temps_cuisson" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ex : 30">
             </div>
 
             <!-- Temps de repos -->
             <div class="mb-4">
-                <label for="temps_repos" class="block text-lg font-semibold text-gray-600 mb-2">Temps de repos (minutes)</label>
+                <label for="temps_repos" class="block text-lg font-semibold text-gray-600 mb-2">
+                    Temps de repos (minutes)
+                </label>
                 <input type="number" name="temps_repos" id="temps_repos" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ex : 60">
             </div>
 
             <!-- Temps total -->
             <div class="mb-4">
-                <label for="temps_total" class="block text-lg font-semibold text-gray-600 mb-2">Temps total (minutes)</label>
+                <label for="temps_total" class="block text-lg font-semibold text-gray-600 mb-2">
+                    Temps total (minutes)
+                </label>
                 <input type="number" name="temps_total" id="temps_total" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ex : 110">
             </div>
 
             <!-- Nombre de portions -->
             <div class="mb-4">
-                <label for="portion" class="block text-lg font-semibold text-gray-600 mb-2">Nombre de portions</label>
+                <label for="portion" class="block text-lg font-semibold text-gray-600 mb-2">
+                    Nombre de portions
+                </label>
                 <input type="number" name="portion" id="portion" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ex : 8">
             </div>
 
             <!-- Difficulté -->
             <div class="mb-4">
-                <label for="difficulte" class="block text-lg font-semibold text-gray-600 mb-2">Difficulté</label>
-                <select name="difficulte" id="difficulte" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <label for="difficulte" class="block text-lg font-semibold text-gray-600 mb-2">
+                    Difficulté <span class="text-red-500">*</span>
+                </label>
+                <select name="difficulte" id="difficulte" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                     <option value="facile">Facile</option>
                     <option value="moyenne">Moyenne</option>
                     <option value="difficile">Difficile</option>
@@ -63,8 +82,10 @@
 
             <!-- Type de recette -->
             <div class="mb-4">
-                <label for="type" class="block text-lg font-semibold text-gray-600 mb-2">Type de recette</label>
-                <select name="type" id="type" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <label for="type" class="block text-lg font-semibold text-gray-600 mb-2">
+                    Type de recette <span class="text-red-500">*</span>
+                </label>
+                <select name="type" id="type" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                     <option value="entree">Entrée</option>
                     <option value="plat">Plat</option>
                     <option value="dessert">Dessert</option>
@@ -73,32 +94,22 @@
                 </select>
             </div>
 
-    <!-- Ingrédients (cases à cocher) avec quantité -->
+    <!-- Ingrédients barre de recherche avec quantité -->
     <div class="mb-6">
-                <h3 class="text-lg font-semibold text-gray-600 mb-2">Ingrédients</h3>
-                @foreach($ingredients as $ingredient)
-                    <div class="flex items-center mb-2">
-                        <input type="checkbox" name="ingredients[]" value="{{ $ingredient->id }}" id="ingredient_{{ $ingredient->id }}" class="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
-                        <label for="ingredient_{{ $ingredient->id }}" class="text-gray-600">{{ $ingredient->nom }}</label>
+                <h2 class="text-lg font-bold text-center  text-gray-600 mb-2">Ingrédients</h2>
+                 <!-- Barre de recherche d'ingrédients -->
+            <div class="mb-4">
+                <label for="search-ingredient" class="block text-lg font-semibold text-gray-600 mb-2">Rechercher un ingrédient</label>
+                <span class="text-red-500">Vous pouvez ajouter des ingrédients à votre recette en les recherchant ci-dessous.</span>
+                <input type="text" id="search-ingredient" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="Tapez un ingrédient..." autocomplete="off">
+                <div id="search-results" class="mt-2"></div> <!-- Conteneur pour afficher les résultats -->
+            </div>
 
-                        <!-- Champs pour la quantité associée à chaque ingrédient -->
-                         <input type="text" name="quantites[{{ $ingredient->id }}]" placeholder="Quantité" class="ml-4 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-
-                         <!-- Selection de l'unité de mesure -->
-                          <select name="unites[{{ $ingredient->id }}]" class="ml-4 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            <option value="g">g</option>
-                            <option value="kg">kg</option>
-                            <option value="ml">ml</option>
-                            <option value="cl">cl</option>
-                            <option value="l">l</option>
-                            <option value="cuillère à soupe">cuillère à soupe</option>
-                            <option value="cuillère à café">cuillère à café</option>
-                            <option value="unité">unité</option>
-                            <option value="feuille">feuille</option>
-                            <option value="tranche">tranche(s)</option>
-                        </select>
-                    </div>
-                @endforeach
+            <!-- Ingrédients sélectionnés -->
+            <div id="selected-ingredients" class="mb-6">
+                <h3 class="text-lg font-semibold text-gray-600 mb-2">Ingrédients sélectionnés :</h3>
+                <!-- Ici on affichera les ingrédients sélectionnés -->
+            </div>
             </div>
 
             <!-- Bouton de soumission -->

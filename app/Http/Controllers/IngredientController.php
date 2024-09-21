@@ -12,18 +12,12 @@ class IngredientController extends Controller
         $ingredients = Ingredient::all();
         return view('ingredients.index', compact('ingredients'));
     }
-
-    public function show($id)
-    {
-        $ingredient = Ingredient::findOrFail($id);
-        return view('ingredients.show', compact('ingredient'));
-    }
-
+    
     public function create()
     {
         return view('ingredients.create');
     }
-
+    
     public function store(Request $request)
     {
         $request->validate([
@@ -39,4 +33,47 @@ class IngredientController extends Controller
         return redirect()->route('ingredients.index')->with('success', 'Ingrédient créé avec succès');
 
     }
+
+    public function show($id)
+    {
+        $ingredient = Ingredient::findOrFail($id);
+        return view('ingredients.show', compact('ingredient'));
+    }
+
+    public function edit($id)
+    {
+        $ingredient = Ingredient::findOrFail($id);
+        return view('ingredients.edit', compact('ingredient'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nom' => 'required|string|max:255',
+            'description' => 'nullable|string',
+        ]);
+
+        $ingredient = Ingredient::findOrFail($id);
+        $ingredient->update([
+            'nom' => $request->nom,
+            'description' => $request->description,
+        ]);
+
+        return redirect()->route('ingredients.index')->with('success', 'Ingrédient modifié avec succès');
+    }
+
+    public function destroy($id)
+    {
+        $ingredient = Ingredient::findOrFail($id);
+        $ingredient->delete();
+        return redirect()->route('ingredients.index')->with('success', 'Ingrédient supprimé avec succès');
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->get('q');
+        $ingredients = Ingredient::where('nom', 'ILIKE', "%{$query}%")->get();
+        return response()->json($ingredients);
+    }
+
 }

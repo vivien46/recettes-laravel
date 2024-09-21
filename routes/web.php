@@ -20,6 +20,11 @@ Route::delete('/recettes/{id}', [RecetteController::class, 'destroy'])->name('re
 // Routes pour les ingrédients
 Route::get('/ingredients', [IngredientController::class, 'index'])->name('ingredients.index');
 Route::get('/ingredients/create', [IngredientController::class, 'create'])->name('ingredients.create');
+
+// Route pour la recherche d'ingrédients (API AJAX)
+Route::get('/ingredients/search', [IngredientController::class, 'search'])->name('ingredients.search');
+
+// autres routes pour les ingrédients
 Route::get('/ingredients/{id}', [IngredientController::class, 'show'])->name('ingredients.show');
 Route::get('/ingredients/{id}/edit', [IngredientController::class, 'edit'])->name('ingredients.edit');
 
