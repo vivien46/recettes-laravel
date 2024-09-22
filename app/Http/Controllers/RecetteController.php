@@ -11,7 +11,7 @@ class RecetteController extends Controller
     // Afficher la liste des recettes
     public function index()
     {
-        $recipes = Recipe::all();
+        $recipes = Recipe::paginate(10);
         return view('recettes.index', compact('recipes'));
     }
 
