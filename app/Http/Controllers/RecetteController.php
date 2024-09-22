@@ -18,9 +18,9 @@ class RecetteController extends Controller
     // Afficher une seule recette
     public function show($id)
     {
-        $recipe = Recipe::with(['ingredients' => function($query) {
+        $recipe = Recipe::with(['ingredients' => function ($query) {
             $query->orderBy('recipe_ingredient.id', 'asc');
-        }, 'steps' => function($query) {
+        }, 'steps' => function ($query) {
             $query->orderBy('order', 'asc');  // Ajoute l'ordre des étapes
         }])->findOrFail($id);
         return view('recettes.show', compact('recipe'));
@@ -72,7 +72,7 @@ class RecetteController extends Controller
             // Récupérer la quantité et l'unité
             $quantite = $request->quantites[$ingredientId] ?? null;
             $unite = $request->unites[$ingredientId] ?? null;
-    
+
             if ($quantite && $unite) {
                 // Manipulation des unités en fonction de la quantité
                 if ($quantite > 1) {
@@ -90,17 +90,17 @@ class RecetteController extends Controller
                         case "tranche":
                             $unite = "tranches";
                             break;
-                        // Pas de modification pour les autres unités (g, kg, ml, etc.)
+                            // Pas de modification pour les autres unités (g, kg, ml, etc.)
                         default:
                             break;
                     }
                 }
-                 // Concaténer la quantité et l'unité
-            $quantite_avec_unite = $quantite . ' ' . $unite;
+                // Concaténer la quantité et l'unité
+                $quantite_avec_unite = $quantite . ' ' . $unite;
 
-            // Attacher l'ingrédient à la recette
-            $recipe->ingredients()->attach($ingredientId, ['quantite' => $quantite_avec_unite]);
-        }
+                // Attacher l'ingrédient à la recette
+                $recipe->ingredients()->attach($ingredientId, ['quantite' => $quantite_avec_unite]);
+            }
         }
 
         return redirect()->route('recettes.show', $recipe->id)->with('success', 'Recette créée avec succès.');
@@ -109,9 +109,9 @@ class RecetteController extends Controller
     // Afficher le formulaire de modification d'une recette
     public function edit($id)
     {
-        $recipe = Recipe::with(['ingredients' => function($query) {
+        $recipe = Recipe::with(['ingredients' => function ($query) {
             $query->orderBy('recipe_ingredient.id', 'asc');
-        }, 'steps' => function($query) {
+        }, 'steps' => function ($query) {
             $query->orderBy('order', 'asc');
         }])->findOrFail($id);
 
@@ -169,23 +169,23 @@ class RecetteController extends Controller
         ]);
 
         // Mettre à jour les ingrédients
-    $recipe->ingredients()->detach();
-    foreach ($request->ingredients as $ingredientId) {
-        $quantite = $request->quantites[$ingredientId] ?? null;
-        $unite = $request->unites[$ingredientId] ?? null;
-        $quantite_avec_unite = $quantite . ' ' . $unite;
-        $recipe->ingredients()->attach($ingredientId, ['quantite' => $quantite_avec_unite]);
-    }
+        $recipe->ingredients()->detach();
+        foreach ($request->ingredients as $ingredientId) {
+            $quantite = $request->quantites[$ingredientId] ?? null;
+            $unite = $request->unites[$ingredientId] ?? null;
+            $quantite_avec_unite = $quantite . ' ' . $unite;
+            $recipe->ingredients()->attach($ingredientId, ['quantite' => $quantite_avec_unite]);
+        }
 
-    // Mettre à jour les étapes
-    $recipe->steps()->delete();
-    foreach ($request->steps as $index => $stepDescription) {
-        $ordre = $request->order[$index];
-        $recipe->steps()->create([
-            'description' => $stepDescription,
-            'order' => $ordre,
-        ]);
-    }
+        // Mettre à jour les étapes
+        $recipe->steps()->delete();
+        foreach ($request->steps as $index => $stepDescription) {
+            $ordre = $request->order[$index];
+            $recipe->steps()->create([
+                'description' => $stepDescription,
+                'order' => $ordre,
+            ]);
+        }
 
         // Rediriger vers la page de la recette avec un message de succès
         return redirect()->route('recettes.show', $recipe->id)->with('success', 'Recette mise à jour avec succès.');
