@@ -12,6 +12,11 @@
         </a>
     </div>
 
+    <!-- Pagination en haut -->
+    <div class="mt-6 mb-2 flex flex-col items-center">
+            {{ $ingredients->links('vendor.pagination.tailwind') }}
+    </div>
+
     @if($ingredients->isEmpty())
     <p>Aucun ingrédient trouvé.</p>
     @else
@@ -27,9 +32,9 @@
         <tbody>
             @foreach ($ingredients as $ingredient)
             <tr>
-                <td class="border-b px-4 py-2 text-center">{{ $ingredient->nom }}</td>
+                <td class="border-b px-4 py-2 text-center capitalize">{{ $ingredient->nom }}</td>
                 <td class="border-b px-4 py-2">
-                    <p class="justify-center align-middle items-center">{{ $ingredient->description }}</p>
+                    <p class="align-middle text-justify">{{ $ingredient->description }}</p>
                 </td>
                 <td class="border-b px-4 py-2 text-center w-1/5">
                     <div class="flex justify-center items-center space-x-2">
@@ -55,6 +60,9 @@
             @endforeach
         </tbody>
     </table>
+    <div class="mt-6 flex flex-col justify-around space-x-3">
+        {{ $ingredients->links('vendor.pagination.tailwind') }}
+        </div>
     @endif
 </div>
 @endsection
