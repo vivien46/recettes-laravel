@@ -37,7 +37,7 @@
                     <p class="align-middle text-justify">{{ $ingredient->description }}</p>
                 </td>
                 <td class="border-b px-4 py-2 text-center w-1/5">
-                    <div class="flex justify-center items-center space-x-2">
+                    <div class="flex justify-center items-center space-x-4">
                         <!-- Bouton Voir -->
                         <a href="{{ route('ingredients.show', $ingredient->id) }}" class="bg-blue-600 p-2 rounded hover:bg-blue-800 flex justify-center items-center">
                             <i class="fas fa-eye text-white"></i>
