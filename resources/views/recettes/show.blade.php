@@ -3,7 +3,7 @@
 @section('title', $recipe->titre)
 
 @section('content')
-<div class="container mx-auto">
+
     <!-- Card plus longue en hauteur -->
     <div class="bg-white shadow-md rounded-lg mb-6 min-h-[600px] max-w-3xl mx-auto">
         <!-- Card Header -->
