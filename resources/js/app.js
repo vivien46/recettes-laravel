@@ -8,6 +8,60 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 5000); // Masquer après 5 secondes
     }
 
+    // ================== Gestion des étapes dynamiques ==================
+    // Récupérer les éléments HTML nécessaires
+    const stepsContainer = document.getElementById('steps-container');
+    const addStepButton = document.getElementById('add-step');
+
+    // compteur pour suivre le nombre d'étapes
+    let stepCount = 1;
+
+    // Fonction pour ajouter une nouvelle étape
+    addStepButton.addEventListener('click', function() {
+        // Incrémenter le compteur
+        const stepNumber = stepCount++;
+
+        // Créer une div pour l'étape
+        const stepDiv = document.createElement('div');
+        stepDiv.classList.add('step', 'mb-4', 'p-5', 'bg-blue-100', 'rounded-lg', 'relative');
+
+        // Ajouter une zone de texte pour décrire l'étape et son titre dynamique
+        stepDiv.innerHTML = `
+            <h4 class="font-bold mb-2">Étape N°${stepNumber}</h4>
+            <input type="hidden" name="order[]" value="${stepNumber}">
+            <textarea name="steps[]" class="w-full p-2 border border-gray-300 rounded-lg max-w-xl" placeholder="Décrivez l'étape ${stepNumber} de la recette" required></textarea>
+            <!-- Bouton pour supprimer l'étape -->
+            <button type="button" class="bg-red-500 text-white rounded-md p-1 hover:bg-red-600 absolute top-2 right-2 remove-step" onclick="this.parentElement.remove()">X</button>
+            </button>
+        `;
+
+        // Ajouter la nouvelle étape au conteneur
+        stepsContainer.appendChild(stepDiv);
+
+        // Attacher un événement de suppression à chaque bouton de suppression
+        stepDiv.querySelector('.remove-step').addEventListener('click', function() {
+            stepDiv.remove();
+            renumberSteps();
+        });
+        });
+
+        // Fonction pour renuméroter les étapes après la suppression
+        function renumberSteps() {
+            const stepElements = stepsContainer.querySelectorAll('.step');
+            stepCount = 1;
+
+            stepElements.forEach(step => {
+                const stepHeader = step.querySelector('h4');
+                const hiddenInput = step.querySelector('input[name="order[]"]');
+                const stepDescription = step.querySelector('textarea[name="steps[]"]');
+
+                stepHeader.textContent = `Étape N°${stepCount}`;
+                hiddenInput.value = stepCount;
+                stepDescription.placeholder = `Décrivez l'étape ${stepCount} de la recette`;
+                stepCount++;
+            });
+        }
+
     //variable pour la recherche d'ingrédients
     const searchInput = document.getElementById('search-ingredient');
     const searchResults = document.getElementById('search-results');

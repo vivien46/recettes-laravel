@@ -13,14 +13,14 @@
         </a>
     </div>
 
-        <!-- Pagination en haut -->
-        <div class="m-6">
-            {{ $recipes->links('vendor.pagination.tailwind') }}
-        </div>
+    <!-- Pagination en haut -->
+    <div class="m-6">
+        {{ $recipes->links('vendor.pagination.tailwind') }}
+    </div>
 
     <!-- Vérifie si la liste est vide -->
     @if($recipes->isEmpty())
-    <p class="text-center text-gray-500">Aucune recette trouvée.</p>
+        <p class="text-center text-gray-500">Aucune recette trouvée.</p>
     @else
     <!-- Affichage des recettes sous forme de cartes -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -35,21 +35,40 @@
                 @endif
             </div>
             <div class="p-4">
-                <!-- Titre de la recette -->
-                <h2 class="text-xl font-bold mb-2">{{ $recipe->titre }}</h2>
+                <!-- Titre de la recette avec icône d'étapes -->
+                <h2 class="text-xl font-bold mb-2 flex items-center space-x-2">
+                    <i class="fas fa-book-open text-indigo-600"></i>
+                    <span>{{ $recipe->titre }}</span>
+                </h2>
                 
                 <!-- Description abrégée de la recette -->
-                <p class="text-gray-600 mb-4 line-clamp-3">{{ \Illuminate\Support\Str::limit($recipe->description, 100, '...') }}</p>
+                <p class="text-gray-600 mb-4 line-clamp-3">{{ $recipe->description }}</p>
                 
                 <!-- Informations sur le temps, la difficulté et les portions -->
-                <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
-                    <span><i class="fas fa-clock mr-1"></i> {{ $recipe->temps_total ?? 'N/A' }} min</span>
+                <div class="flex items-center justify-between text-md text-semibold text-gray-500 mb-4">
+                    <span><i class="fas fa-clock mr-1"></i> @if ($recipe->temps_total >= 60)
+        {{ floor($recipe->temps_total / 60) }}h{{ str_pad($recipe->temps_total % 60, 2, '0', STR_PAD_LEFT) }}
+    @else
+        {{ $recipe->temps_total }}
+    @endif min</span>
                     <span><i class="fas fa-fire mr-1"></i> {{ ucfirst($recipe->difficulte) }}</span>
-                    <span><i class="fas fa-utensils mr-1"></i> {{ $recipe->portion }} portion{{ $recipe->portion > 1 ? 's' : '' }}</span>
+                    <span><i class="fas fa-utensils mr-1"></i> {{ $recipe->portion }} personne{{ $recipe->portion > 1 ? 's' : '' }}</span>
+                </div>
+
+                <!-- Afficher les 3 premières étapes de la recette -->
+                <div class="mb-4 text-sm text-gray-500">
+                    @if($recipe->steps && $recipe->steps->count() > 0)
+                        <p class="font-semibold">Étapes :</p>
+                        <ul class="list-decimal ml-5">
+                            @foreach($recipe->steps->take(2) as $step)
+                                <li>{{ $step->description }}</li>
+                            @endforeach
+                        </ul>
+                    @endif
                 </div>
 
                 <!-- Boutons d'action -->
-                <div class="flex justify-between space-x-1">
+                <div class="flex justify-between space-x-1 mt-4">
                     <a href="{{ route('recettes.show', $recipe->id) }}" 
                        class="bg-blue-600 text-white p-2 rounded hover:bg-blue-800 flex justify-center items-center w-8 h-8">
                         <i class="fas fa-eye"></i>

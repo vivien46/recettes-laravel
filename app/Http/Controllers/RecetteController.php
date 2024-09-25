@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Models\Recipe;
 use App\Models\Ingredient;
 
@@ -11,7 +12,11 @@ class RecetteController extends Controller
     // Afficher la liste des recettes
     public function index()
     {
-        $recipes = Recipe::paginate(10);
+        $recipes = Recipe::with(['steps' => function ($query) {
+            $query->orderBy('order', 'asc')->get()->each(function ($step) {
+                $step->description = str::limit($step->description, 150, '...');
+            });
+        }])->paginate(10);
         return view('recettes.index', compact('recipes'));
     }
 
