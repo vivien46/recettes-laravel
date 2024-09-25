@@ -6,10 +6,26 @@
 <div class="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-lg mt-10">
     <h1 class="text-3xl font-bold mb-6 text-gray-700">Ajouter une recette</h1>
 
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        
+    @endif
+
+    @if($errors->any())
+        <div class="alert alert-danger">
+            <ul class="list-disc list-inside">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <!-- Message sur les champs obligatoires -->
     <p class="text-red-500 mb-4">Tous les champs marqués avec le symbole <span class="font-bold">*</span> sont obligatoires.</p>
 
-    <form action="{{ route('recettes.store') }}" method="POST">
+    <form action="{{ route('recettes.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <!-- Titre -->
@@ -92,6 +108,14 @@
                 <option value="boisson">Boisson</option>
                 <option value="autre">Autre</option>
             </select>
+        </div>
+
+        <!-- Image de la recette -->
+        <div class="mb-4">
+            <label for="imageUrl" class="block text-lg font-semibold text-gray-600 mb-2">
+                Image de la recette
+            </label>
+            <input type="file" name="imageUrl" id="imageUrl" class="w-full p-2 border border-gray-300 rounded-lg">
         </div>
 
         <!-- Ingrédients barre de recherche avec quantité -->

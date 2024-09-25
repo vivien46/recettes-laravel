@@ -10,7 +10,7 @@ class Recipe extends Model
     use HasFactory;
 
     // Nom de la table
-    protected $fillable = ['titre', 'description', 'temps_preparation', 'temps_cuisson', 'temps_repos', 'temps_total', 'portion', 'difficulte', 'type', 'user_id'];
+    protected $fillable = ['titre', 'description', 'temps_preparation', 'temps_cuisson', 'temps_repos', 'temps_total', 'portion', 'difficulte', 'type', 'user_id', 'imageUrl'];
 
     // Relation avec Ingredients
     public function ingredients()

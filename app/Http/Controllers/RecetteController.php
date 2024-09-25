@@ -41,7 +41,7 @@ class RecetteController extends Controller
     // Enregistrer une recette avec les ingrédients
     public function store(Request $request)
     {
-        $request->validate([
+       $validate = $request->validate([
             'titre' => 'required',
             'description' => 'required',
             'temps_preparation' => 'nullable|integer',
@@ -53,10 +53,19 @@ class RecetteController extends Controller
             'type' => 'required',
             'ingredients' => 'required|array',
             'quantites' => 'required|array',
-            'unites' => 'required|array'
+            'unites' => 'required|array',
+            'steps' => 'required|array',
+            'order' => 'required|array',
+            'imageUrl' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
         $userId = 3;
+
+        // Enregistrement de l'image
+        $imagePath = null;
+        if ($request->hasFile('imageUrl')) {
+            $imagePath = $request->file('imageUrl')->store('recettes', 'public');
+        }
 
         // création de la recette
         $recipe = Recipe::create([
@@ -70,6 +79,7 @@ class RecetteController extends Controller
             'difficulte' => $request->difficulte,
             'type' => $request->type,
             'user_id' => $userId,
+            'imageUrl' => $imagePath,
         ]);
 
         // ajout des ingrédients avec les quantités
@@ -106,6 +116,15 @@ class RecetteController extends Controller
                 // Attacher l'ingrédient à la recette
                 $recipe->ingredients()->attach($ingredientId, ['quantite' => $quantite_avec_unite]);
             }
+        }
+
+        // Ajout des étapes à la recette
+        foreach ($request->steps as $stepId => $stepDescription) {
+            $ordre = $request->order[$stepId];
+            $recipe->steps()->create([
+                'description' => $stepDescription,
+                'order' => $ordre,
+            ]);
         }
 
         return redirect()->route('recettes.show', $recipe->id)->with('success', 'Recette créée avec succès.');

@@ -28,10 +28,10 @@
         <div class="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
             <!-- Affichage de l'image de la recette -->
             <div class="h-48 bg-gray-200 overflow-hidden">
-                @if($recipe->image)
-                    <img src="{{ asset('storage/' . $recipe->image) }}" alt="Image de la recette {{ $recipe->titre }}" class="w-full h-full object-cover">
+                @if($recipe->imageUrl)
+                    <img src="{{ asset('storage/' . $recipe->imageUrl) }}" alt="Image de la recette {{ $recipe->titre }}" class="w-48 h-48 object-contain object-center">
                 @else
-                    <img src="https://via.placeholder.com/300x200.png?text=Pas+d'image" alt="Pas d'image disponible" class="w-full h-full object-cover">
+                    <img src="https://via.placeholder.com/300x200.png?text=Pas+d'image" alt="Pas d'image disponible" class="w-48 h-48 object-contain">
                 @endif
             </div>
             <div class="p-4">
