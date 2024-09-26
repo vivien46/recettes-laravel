@@ -3,6 +3,23 @@
 @section('title', 'Liste des Recettes')
 
 @section('content')
+
+@if(session('success'))
+<div class="bg-green-500 text-white p-4 rounded-lg mb-6" id="success-message">
+    {{ session('success') }}
+</div>
+@endif
+
+@if($errors->any())
+<div class="bg-red-500 text-white p-4 rounded-lg mb-6">
+    <ul>
+        @foreach($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
+
 <div class="container mx-auto p-6">
     <h1 class="text-3xl font-bold mb-6">Liste des Recettes</h1>
 
@@ -29,9 +46,9 @@
             <!-- Affichage de l'image de la recette -->
             <div class="h-48 bg-gray-200 overflow-hidden">
                 @if($recipe->imageUrl)
-                    <img src="{{ asset('storage/' . $recipe->imageUrl) }}" alt="Image de la recette {{ $recipe->titre }}" class="w-48 h-48 object-contain object-center">
+                    <img src="{{ asset('storage/' . $recipe->imageUrl) }}" alt="Image de la recette {{ $recipe->titre }}" class="w-full h-auto object-fill">
                 @else
-                    <img src="https://via.placeholder.com/300x200.png?text=Pas+d'image" alt="Pas d'image disponible" class="w-48 h-48 object-contain">
+                    <img src="https://via.placeholder.com/300x200.png?text=Pas+d'image" alt="Pas d'image disponible" class="w-full h-auto object-contain">
                 @endif
             </div>
             <div class="p-4">

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\Recipe;
 use App\Models\Ingredient;
+use Illuminate\Support\Facades\Storage;
 
 class RecetteController extends Controller
 {
@@ -56,7 +57,12 @@ class RecetteController extends Controller
             'unites' => 'required|array',
             'steps' => 'required|array',
             'order' => 'required|array',
-            'imageUrl' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'imageUrl' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048|dimensions:min_width=300,min_height=300,max_width=1500,max_height=1500',
+       ],[
+            'imageUrl.dimensions' => 'L\'image doit avoir une taille minimale de 300x300 pixels et maximale de 1500x1500 pixels.',
+            'imageUrl.image' => 'Le fichier téléchargé doit être une image.',
+            'imageUrl.mimes' => 'L\'image doit être de type jpeg, png, jpg ou webp.',
+            'imageUrl.max' => 'L\'image ne doit pas dépasser 2 Mo.',
         ]);
 
         $userId = 3;
@@ -143,7 +149,7 @@ class RecetteController extends Controller
 
         // Parcourir chaque ingrédient pour séparer la quantité et l'unité
         foreach ($recipe->ingredients as $ingredient) {
-            if (preg_match('/^(\d+(\.\d+)?)\s*(.*)$/', $ingredient->pivot->quantite, $matches)) {
+            if (preg_match('/(\d+)\s*(.*)/', $ingredient->pivot->quantite, $matches)) {
                 $ingredient->pivot->quantite_numeric = $matches[1]; // La partie numérique de la quantité
                 $ingredient->pivot->quantite_unite = $matches[2];   // L'unité (g, kg, etc.)
             } else {
@@ -159,7 +165,7 @@ class RecetteController extends Controller
     public function update(Request $request, $id)
     {
         // Valider les données du formulaire
-        $request->validate([
+        $validated = $request->validate([
             'titre' => 'required|string|max:255',
             'description' => 'required|string',
             'temps_preparation' => 'required|integer',
@@ -174,40 +180,60 @@ class RecetteController extends Controller
             'unites' => 'required|array',
             'steps' => 'required|array',
             'order' => 'required|array',
+            'imageUrl' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048|dimensions:min_width=300,min_height=300,max_width=1500,max_height=1500',
+       ],[
+            'imageUrl.dimensions' => 'L\'image doit avoir une taille minimale de 300x300 pixels et maximale de 1500x1500 pixels.',
+            'imageUrl.image' => 'Le fichier téléchargé doit être une image.',
+            'imageUrl.mimes' => 'L\'image doit être de type jpeg, png, jpg ou webp.',
+            'imageUrl.max' => 'L\'image ne doit pas dépasser 2 Mo.',
         ]);
 
         // Récupérer la recette à modifier
         $recipe = Recipe::findOrFail($id);
 
+        // Gestion de l'upload de l'image
+        if ($request->hasFile('imageUrl')) {
+            // Supprime l'ancienne image si elle existe
+            if ($recipe->imageUrl) {
+                Storage::disk('public')->delete($recipe->imageUrl);
+            }
+
+            // Enregistre la nouvelle image
+            $imagePath = $request->file('imageUrl')->store('recettes', 'public');
+            $recipe->imageUrl = $imagePath;
+        }
+
         // Mettre à jour les champs de la recette
         $recipe->update([
-            'titre' => $request->input('titre'),
-            'description' => $request->input('description'),
-            'temps_preparation' => $request->input('temps_preparation'),
-            'temps_cuisson' => $request->input('temps_cuisson'),
-            'temps_repos' => $request->input('temps_repos'),
-            'temps_total' => $request->input('temps_total'),
-            'portion' => $request->input('portion'),
-            'difficulte' => $request->input('difficulte'),
-            'type' => $request->input('type'),
+            'titre' => $validated['titre'],
+            'description' => $validated['description'],
+            'temps_preparation' => $validated['temps_preparation'],
+            'temps_cuisson' => $validated['temps_cuisson'],
+            'temps_repos' => $validated['temps_repos'],
+            'temps_total' => $validated['temps_total'],
+            'portion' => $validated['portion'],
+            'difficulte' => $validated['difficulte'],
+            'type' => $validated['type'],
         ]);
 
         // Mettre à jour les ingrédients
         $recipe->ingredients()->detach();
-        foreach ($request->ingredients as $ingredientId) {
-            $quantite = $request->quantites[$ingredientId] ?? null;
-            $unite = $request->unites[$ingredientId] ?? null;
+    foreach ($validated['ingredients'] as $ingredientId) {
+        $quantite = $validated['quantites'][$ingredientId] ?? null;
+        $unite = $validated['unites'][$ingredientId] ?? null;
+
+        if ($quantite && $unite) {
             $quantite_avec_unite = $quantite . ' ' . $unite;
             $recipe->ingredients()->attach($ingredientId, ['quantite' => $quantite_avec_unite]);
         }
+    }
 
         // Mettre à jour les étapes
         $recipe->steps()->delete();
-        foreach ($request->steps as $index => $stepDescription) {
-            $ordre = $request->order[$index];
+        foreach ($validated['steps'] as $index => $stepDescription) {
             $recipe->steps()->create([
                 'description' => $stepDescription,
-                'order' => $ordre,
+                'order' => $validated['order'][$index],
             ]);
         }
 
@@ -219,7 +245,14 @@ class RecetteController extends Controller
     public function destroy($id)
     {
         $recipe = Recipe::findOrFail($id);
+
+        // Supprimer l'image si elle existe
+        if ($recipe->imageUrl) {
+            Storage::disk('public')->delete($recipe->imageUrl);
+        }
+
         $recipe->delete();
+
         return redirect()->route('recettes.index')->with('success', 'La recette a bien été supprimée');
     }
 }

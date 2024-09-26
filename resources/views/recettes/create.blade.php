@@ -3,6 +3,23 @@
 @section('title', 'Ajouter une recette')
 
 @section('content')
+
+@if(session('success'))
+<div class="bg-green-500 text-white p-4 rounded-lg mb-6" id="success-message">
+    {{ session('success') }}
+</div>    
+@endif
+
+@if($errors->any())
+<div class="bg-red-500 text-white p-4 rounded-lg mb-6">
+    <ul>
+        @foreach($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
+
 <div class="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-lg mt-10">
     <h1 class="text-3xl font-bold mb-6 text-gray-700">Ajouter une recette</h1>
 
@@ -12,15 +29,16 @@
         
     @endif
 
-    @if($errors->any())
-        <div class="alert alert-danger">
-            <ul class="list-disc list-inside">
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+    @if ($errors->any())
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+        <strong class="font-bold">Erreur!</strong>
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
     <!-- Message sur les champs obligatoires -->
     <p class="text-red-500 mb-4">Tous les champs marqués avec le symbole <span class="font-bold">*</span> sont obligatoires.</p>
