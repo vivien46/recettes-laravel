@@ -16,6 +16,9 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
+    // protected $table = 'users';
+
     protected $fillable = [
         'nom',
         'prenom',
@@ -46,5 +49,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'date_naissance' => 'date',
         ];
+    }
+
+    public function getAuthPassword()
+    {
+        return $this->mot_de_passe;
     }
 }

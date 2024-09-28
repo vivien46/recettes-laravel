@@ -11,6 +11,9 @@
     <!-- Inclure la barre de navigation -->
     @include('layouts.navbar')
 
+    <div class="parallax-header">
+    </div>
+
     <!-- Contenu principal -->
     <div class="container mx-auto mt-8">
         @yield('content')

@@ -1,4 +1,4 @@
-<nav class="bg-gray-800 p-4">
+<nav class="bg-gray-800 p-8">
     <div class="container mx-auto flex justify-between">
         <!-- Lien vers l'accueil -->
         <div class="flex space-x-4">
@@ -27,13 +27,22 @@
             </div>
         </div>
 
-        <!-- Placeholder pour la gestion des rôles utilisateur (User/Admin) -->
-        <div>
-            {{-- Pour plus tard : Ajouter des liens spécifiques selon le rôle --}}
-            @if(auth()->check())
-                <span class="text-white">Bienvenue, {{ auth()->user()->nom }}</span>
-                {{-- Ajoute ici des liens supplémentaires pour les admins plus tard --}}
-            @endif
-        </div>
+        <div class="flex items-center space-x-4">
+    {{-- Pour plus tard : Ajouter des liens spécifiques selon le rôle --}}
+    @if(auth()->check())
+        <span class="text-white">Bienvenue, {{ auth()->user()->pseudo }}</span>
+        {{-- Ajoute ici des liens supplémentaires pour les admins plus tard --}}
+        <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button type="submit" class="text-white bg-transparent hover:underline focus:outline-none">
+                Déconnexion
+            </button>
+        </form>
+    @else
+        <a href="{{ route('login') }}" class="text-white hover:underline">Connexion</a>
+        <a href="{{ route('register') }}" class="text-white hover:underline">Inscription</a>
+    @endif
+</div>
+
     </div>
 </nav>

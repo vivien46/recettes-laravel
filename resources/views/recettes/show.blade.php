@@ -21,7 +21,7 @@
 @endif
 
 <!-- Card plus longue en hauteur -->
-<div class="bg-white shadow-md rounded-lg mb-6 min-h-[600px] max-w-3xl mx-auto">
+<div class="bg-white shadow-md rounded-lg mb-6 min-h-[600px] max-w-5xl mx-auto text-center">
     <!-- Card Header -->
     <div class="bg-gray-800 text-white p-6 rounded-t-lg">
         <h1 class="text-4xl font-bold">{{ $recipe->titre }}</h1>
@@ -46,30 +46,34 @@
         <div class="grid grid-cols-2 gap-6">
             <!-- Temps de préparation -->
             <div class="flex items-center space-x-2">
-                <img width="60" height="50" src="https://img.icons8.com/external-photo3ideastudio-lineal-photo3ideastudio/64/external-meal-gym-photo3ideastudio-lineal-photo3ideastudio.png" alt="external-meal-gym-photo3ideastudio-lineal-photo3ideastudio" />
+                {{-- <img width="60" height="50" src="https://img.icons8.com/external-photo3ideastudio-lineal-photo3ideastudio/64/external-meal-gym-photo3ideastudio-lineal-photo3ideastudio.png" alt="external-meal-gym-photo3ideastudio-lineal-photo3ideastudio" /> --}}
                 <strong>Temps de préparation :</strong>
-                <p> {{ $recipe->temps_preparation }} minutes</p>
+                <p> {{ $recipe->temps_preparation }} minutes</p><i class="fas fa-clock"></i>
             </div>
 
             <!-- Temps de cuisson -->
             <div class="flex items-center space-x-2">
-                <img width="50" height="50" src="https://img.icons8.com/ios/50/bake.png" alt="bake" />
+                {{-- <img width="50" height="50" src="https://img.icons8.com/ios/50/bake.png" alt="bake" /> --}}
                 <strong>Temps de cuisson : </strong>
-                <p>{{ $recipe->temps_cuisson }} minutes</p>
+                <p>{{ $recipe->temps_cuisson }} minutes</p><i class="fas fa-stopwatch"></i>
+
+
             </div>
 
             <!-- Temps de repos -->
             <div class="flex items-center space-x-2">
-                <img width="50" height="50" src="https://img.icons8.com/ios/50/waiting-room.png" alt="waiting-room" />
+                {{-- <img width="50" height="50" src="https://img.icons8.com/ios/50/waiting-room.png" alt="waiting-room" /> --}}
                 <strong>Temps de repos : </strong>
-                <p>{{ $recipe->temps_repos }} minutes</p>
+                <p>{{ $recipe->temps_repos }} minutes</p><i class="fas fa-pause"></i>
+
             </div>
 
             <!-- Temps total -->
             <div class="flex items-center space-x-2">
-                <img width="50" height="50" src="https://img.icons8.com/ios/50/time--v1.png" alt="time--v1" />
+                {{-- <img width="50" height="50" src="https://img.icons8.com/ios/50/time--v1.png" alt="time--v1" /> --}}
                 <strong>Temps total :</strong>
-                <p>{{ $recipe->temps_total }} minutes</p>
+                <p>{{ $recipe->temps_total }} minutes</p><i class="fas fa-hourglass-half"></i>
+
             </div>
         </div>
     </div>
@@ -89,14 +93,15 @@
             </div>
 
             <div>
-                <img width="50" height="50" src="https://img.icons8.com/ios/50/cutlery.png" alt="cutlery" />
+                {{-- <img width="50" height="50" src="https://img.icons8.com/ios/50/cutlery.png" alt="cutlery" /> --}}
+                <strong>Portion :</strong>
                 <p>{{ $recipe->portion }} personnes</p>
             </div>
         </div>
     </div>
 
     <!-- Section des Ingrédients (déplacée au-dessus des étapes) -->
-    <h2 class="text-2xl font-bold mt-6">Ingrédients :</h2>
+    <h2 class="text-2xl font-bold mt-6 text-center">Ingrédients</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
         @foreach($recipe->ingredients as $ingredient)
         <div class="bg-white p-4 rounded-lg shadow-md flex items-center space-x-4 transform transition duration-300 hover:scale-105 hover:shadow-2xl">
@@ -106,7 +111,7 @@
             </div>
             
             <!-- Informations de l'ingrédient -->
-            <div>
+            <div class="text-center">
                 <h3 class="text-lg font-semibold">{{ $ingredient->nom }}</h3>
                 <span class="text-sm bg-green-100 text-green-800 px-2 py-1 rounded-full">{{ $ingredient->pivot->quantite }}</span>
             </div>
@@ -115,11 +120,11 @@
     </div>
 
     <!-- Afficher les étapes de la recette -->
-    <h2 class="text-2xl font-bold mt-6">Étapes :</h2>
+    <h2 class="text-2xl font-bold mt-6 text-center">Étapes</h2>
     <div class="mt-4 space-y-4">
         @foreach($recipe->steps as $step)
         <div class="bg-blue-100 p-4 rounded-lg shadow-md">
-            <h3 class="font-bold text-lg">Étape {{ $step->order }}</h3>
+            <h3 class="font-bold text-lg">Étape {{ $step->order }} :</h3>
             <p class="text-gray-700 mt-2">{{ $step->description }}</p>
         </div>
         @endforeach
@@ -127,7 +132,7 @@
 </div>
 
 <!-- Boutons d'édition et de suppression -->
-<div class="m-6 flex space-x-4">
+<div class="m-6 flex space-x-4 justify-center items-center">
     <a href="{{ route('recettes.edit', $recipe->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
         Modifier la recette
     </a>

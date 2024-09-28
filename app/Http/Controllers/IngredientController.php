@@ -9,7 +9,7 @@ class IngredientController extends Controller
 {
     public function index()
     {
-        $ingredients = Ingredient::paginate(10);
+        $ingredients = Ingredient::orderBy('created_at')->paginate(10);
         return view('ingredients.index', compact('ingredients'));
     }
     

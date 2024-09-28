@@ -2,3 +2,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.parallax-header {
+    background-image: url("/public/storage/assets/parallaxe/hybrid-storytellers-LsoFPIz3_eg-unsplash.jpg");
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    position: relative;
+    margin-top: 0; 
+    padding-top: 0; 
+    height: 100vh; 
+  }

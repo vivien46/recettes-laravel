@@ -1,6 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
+@if(session('success'))
+<div class="bg-green-500 text-white p-4 rounded-lg mb-6" id="success-message">
+    {{ session('success') }}
+</div>
+@endif
+
+@if($errors->any())
+<div class="bg-red-500 text-white p-4 rounded-lg mb-6">
+    <ul>
+        @foreach($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
+
 <div class="relative bg-white overflow-hidden">
     <div class="max-w-7xl mx-auto">
         <div class="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
