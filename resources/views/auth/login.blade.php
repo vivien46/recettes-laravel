@@ -27,6 +27,9 @@
         <div class="mb-4">
             <label for="mot_de_passe" class="block text-gray-700">Mot de passe</label>
             <input type="password" id="mot_de_passe" name="mot_de_passe" class="w-full border border-gray-300 p-2 rounded-lg" required>
+            <span><a href="{{ route('password.request') }}" class="text-blue-500 hover:underline">Mot de passe oublié ?</a></span>
+            
+            </>
         </div>
 
         <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition-colors">Se connecter</button>
