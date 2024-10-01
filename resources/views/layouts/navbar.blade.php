@@ -2,7 +2,7 @@
     <div class="container mx-auto flex justify-between">
         <!-- Lien vers l'accueil -->
         <div class="flex space-x-4">
-            <a href="{{ url('/') }}" class="text-white font-bold">Accueil</a>
+            <a href="{{ route('home') }}" class="text-white font-bold">Accueil</a>
 
             <!-- Dropdown Recettes -->
             <div class="relative group">
