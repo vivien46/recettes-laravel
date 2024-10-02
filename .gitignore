@@ -1,16 +1,11 @@
-# Ignorer tout le dossier public/storage sauf les sous-dossiers spécifiés
+# Laravel-specific files
+/public/build
+/public/hot
 /public/storage/*
 !/public/storage/assets/
-!/public/storage/recettes/
-
-# Ignorer le contenu de recettes sauf le fichier .gitkeep
-public/storage/recettes/*
+/public/storage/recettes/*
 !public/storage/recettes/.gitkeep
-
-# Ignorer tout fichier .key dans storage
 /storage/*.key
-
-# Ignorer les répertoires générés par Composer et autres outils de build
 /vendor
 /bootstrap/cache/*
 /.env
