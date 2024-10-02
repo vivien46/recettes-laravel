@@ -32,13 +32,13 @@
             </div>
 
             <div class="mb-4">
-                <label for="mot_de_passe" class="block text-gray-700">Nouveau mot de passe</label>
-                <input type="password" id="mot_de_passe" name="mot_de_passe" class="w-full border border-gray-300 p-2 rounded-lg" required>
+                <label for="password" class="block text-gray-700">Nouveau mot de passe</label>
+                <input type="password" id="password" name="password" class="w-full border border-gray-300 p-2 rounded-lg" required>
             </div>
 
             <div class="mb-4">
-                <label for="mot_de_passe_confirmation" class="block text-gray-700">Confirmer le mot de passe</label>
-                <input type="password" id="mot_de_passe_confirmation" name="mot_de_passe_confirmation" class="w-full border border-gray-300 p-2 rounded-lg" required>
+                <label for="password_confirmation" class="block text-gray-700">Confirmer le mot de passe</label>
+                <input type="password" id="password_confirmation" name="password_confirmation" class="w-full border border-gray-300 p-2 rounded-lg" required>
             </div>
 
             <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition-colors">Réinitialiser le mot de passe</button>

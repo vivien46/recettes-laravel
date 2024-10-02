@@ -21,13 +21,14 @@ class ResetPasswordController extends Controller
         $request->validate([
             'token' => 'required',
             'email' => 'required|email',
-            'mot_de_passe' => 'required|string|min:8|confirmed',
+            'password' => 'required|string|min:8|confirmed',
         ]);
 
-        dd($request->only('email', 'mot_de_passe', 'token'));
+        // dd($request->only('email', 'mot_de_passe', 'token'));
+        // dd($request->all());
 
         $status = Password::reset(
-            $request->only('email', 'mot_de_passe', 'token'),
+            $request->only('email', 'password', 'token'),
             function ($user, $password) {
                 $user->forceFill([
                     'mot_de_passe' => Hash::make($password),
@@ -37,7 +38,7 @@ class ResetPasswordController extends Controller
         );
 
         if ($status == Password::PASSWORD_RESET) {
-            return redirect()->route('login')->with('status', 'Votre mot de passe a été réinitialisé avec succès!');
+            return redirect()->route('login')->with('success', 'Votre mot de passe a été réinitialisé avec succès!');
         } else {
             return back()->withErrors(['email' => 'Aucun utilisateur trouvé avec cette adresse e-mail.']);
         }

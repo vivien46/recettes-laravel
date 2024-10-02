@@ -1,1 +1,0 @@
-SQLSTATE[42703]: Undefined column: 7 ERREUR: la colonne « mot_de_passe_confirmation » n'existe pas LINE 1: ...s" where "email" = $1 and "mot_de_passe" = $2 and "mot_de_pa... ^ (Connection: pgsql, SQL: select * from "users" where "email" = johndoe@example.com and "mot_de_passe" = Motdepasse and "mot_de_passe_confirmation" = Motdepasse limit 1)
