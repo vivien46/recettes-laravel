@@ -7,7 +7,7 @@
         <div class="w-full bg-white shadow-md rounded-lg p-8">
             <h2 class="text-2xl font-bold mb-4">Mot de passe oublié</h2>
             @if (session('success'))
-                <div class="bg-green-500 text-white p-3 mb-4 rounded">
+                <div class="bg-green-500 text-white p-3 mb-4 rounded success-message">
                     {{ session('success') }}
                 </div>
             @endif
