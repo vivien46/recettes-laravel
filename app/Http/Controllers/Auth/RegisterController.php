@@ -33,6 +33,7 @@ class RegisterController extends Controller
             'date_naissance' => $request->date_naissance,
             'email' => $request->email,
             'mot_de_passe' => Hash::make($request->mot_de_passe),
+            'role' => 'user',
         ]);
 
         return redirect()->route('login')->with('success', 'Inscription réussie, veuillez vous connecter !');

@@ -27,6 +27,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'date_naissance',
         'email',
         'mot_de_passe',
+        'role',
     ];
 
     /**
@@ -55,5 +56,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getAuthPassword()
     {
         return $this->mot_de_passe;
+    }
+
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
     }
 }
