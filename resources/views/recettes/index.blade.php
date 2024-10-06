@@ -55,7 +55,7 @@
                 <!-- Titre de la recette avec icône d'étapes -->
                 <h2 class="text-xl font-bold mb-2 flex items-center space-x-2">
                     <i class="fas fa-book-open text-indigo-600"></i>
-                    <span>{{ $recipe->titre }}</span>
+                    <span>{{ ucfirst($recipe->titre) }}</span>
                 </h2>
                 
                 <!-- Description abrégée de la recette -->

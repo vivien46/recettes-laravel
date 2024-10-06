@@ -18,7 +18,7 @@ class RecetteController extends Controller
             $query->orderBy('order', 'asc')->get()->each(function ($step) {
                 $step->description = str::limit($step->description, 150, '...');
             });
-        }])->orderBy('id', 'asc')->paginate(10);
+        }])->orderBy('id', 'desc')->paginate(10);
         return view('recettes.index', compact('recipes'));
     }
 
