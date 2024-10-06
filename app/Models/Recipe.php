@@ -26,4 +26,10 @@ class Recipe extends Model
         return $this->hasMany(Step::class, 'recipe_id', 'id')->orderBy('order', 'asc');
     }
 
+    // Relation avec User
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }
