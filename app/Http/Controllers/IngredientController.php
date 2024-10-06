@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Ingredient;
+use Illuminate\Support\Facades\Log;
 
 class IngredientController extends Controller
 {
@@ -70,10 +71,36 @@ class IngredientController extends Controller
     }
 
     public function search(Request $request)
-    {
-        $query = $request->get('q');
-        $ingredients = Ingredient::where('nom', 'ILIKE', "%{$query}%")->get();
-        return response()->json($ingredients);
+{
+    // Log la requête pour voir si le paramètre 'q' est bien reçu
+    Log::info('Requête reçue pour la recherche d\'ingrédients', $request->all());
+
+    $query = $request->get('q');
+
+    // Log la valeur du paramètre 'q'
+    Log::info('Paramètre q:', ['query' => $query]);
+
+    // Vérifier si la requête est mal formée ou vide
+    if (empty($query)) {
+        Log::error('Le terme de recherche est manquant ou incorrect.');
+        return response()->json(['message' => 'Le terme de recherche est manquant ou incorrect.'], 400);
     }
+
+    // Effectuer la recherche
+    $ingredients = Ingredient::where('nom', 'ILIKE', "%{$query}%")->get();
+
+    // Log les résultats de la recherche
+    Log::info('Résultats de la recherche:', ['ingredients' => $ingredients]);
+
+    // Vérifier si des résultats ont été trouvés
+    if ($ingredients->isEmpty()) {
+        Log::warning('Aucun ingrédient trouvé pour la recherche : ' . $query);
+        return response()->json(['message' => 'Aucun ingrédient trouvé.'], 404);
+    }
+
+    // Retourner les résultats trouvés sous forme de tableau JSON
+    return response()->json($ingredients);
+}
+
 
 }

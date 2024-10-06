@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use App\Models\Recipe;
 use App\Models\Ingredient;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class RecetteController extends Controller
 {
@@ -65,7 +66,7 @@ class RecetteController extends Controller
             'imageUrl.max' => 'L\'image ne doit pas dépasser 2 Mo.',
         ]);
 
-        $userId = 3;
+        // $userId = 3;
 
         // Enregistrement de l'image
         $imagePath = null;
@@ -84,7 +85,7 @@ class RecetteController extends Controller
             'portion' => $request->portion,
             'difficulte' => $request->difficulte,
             'type' => $request->type,
-            'user_id' => $userId,
+            'user_id' => Auth::user()->id,
             'imageUrl' => $imagePath,
         ]);
 
