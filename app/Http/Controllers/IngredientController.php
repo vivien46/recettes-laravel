@@ -73,16 +73,16 @@ class IngredientController extends Controller
     public function search(Request $request)
 {
     // Log la requête pour voir si le paramètre 'q' est bien reçu
-    Log::info('Requête reçue pour la recherche d\'ingrédients', $request->all());
+    // Log::info('Requête reçue pour la recherche d\'ingrédients', $request->all());
 
     $query = $request->get('q');
 
     // Log la valeur du paramètre 'q'
-    Log::info('Paramètre q:', ['query' => $query]);
+    // Log::info('Paramètre q:', ['query' => $query]);
 
     // Vérifier si la requête est mal formée ou vide
     if (empty($query)) {
-        Log::error('Le terme de recherche est manquant ou incorrect.');
+        // Log::error('Le terme de recherche est manquant ou incorrect.');
         return response()->json(['message' => 'Le terme de recherche est manquant ou incorrect.'], 400);
     }
 
@@ -90,11 +90,11 @@ class IngredientController extends Controller
     $ingredients = Ingredient::where('nom', 'ILIKE', "%{$query}%")->get();
 
     // Log les résultats de la recherche
-    Log::info('Résultats de la recherche:', ['ingredients' => $ingredients]);
+    // Log::info('Résultats de la recherche:', ['ingredients' => $ingredients]);
 
     // Vérifier si des résultats ont été trouvés
     if ($ingredients->isEmpty()) {
-        Log::warning('Aucun ingrédient trouvé pour la recherche : ' . $query);
+        // Log::warning('Aucun ingrédient trouvé pour la recherche : ' . $query);
         return response()->json(['message' => 'Aucun ingrédient trouvé.'], 404);
     }
 

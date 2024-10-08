@@ -150,3 +150,46 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     };
 });
+
+// ================== Gestion du menu Administration ==================
+document.addEventListener('DOMContentLoaded', function () {
+    // Menu principal "Administration"
+    const adminMenuButton = document.getElementById('adminMenuButton');
+    const adminMenuDropdown = document.getElementById('adminMenuDropdown');
+    
+    if (adminMenuButton && adminMenuDropdown) {
+        adminMenuButton.addEventListener('click', function (e) {
+            e.stopPropagation(); // Empêche la propagation pour ne pas fermer immédiatement le menu
+            adminMenuDropdown.classList.toggle('hidden');
+        });
+    }
+
+    // Gérer le clic en dehors pour fermer le menu principal
+    window.addEventListener('click', function (e) {
+        if (!adminMenuButton.contains(e.target) && !adminMenuDropdown.contains(e.target)) {
+            adminMenuDropdown.classList.add('hidden');
+        }
+    });
+
+    // Gestion des sous-menus dans le menu Administration
+    const subMenuToggles = document.querySelectorAll('.subMenuToggle');
+
+    subMenuToggles.forEach(button => {
+        const subMenuContent = button.nextElementSibling; // Sélectionne le menu associé
+        button.addEventListener('click', function (e) {
+            e.stopPropagation(); // Empêche la fermeture immédiate du menu
+            subMenuContent.classList.toggle('hidden');
+        });
+    });
+
+    // Ferme tous les sous-menus quand on clique en dehors
+    window.addEventListener('click', function (e) {
+        subMenuToggles.forEach(button => {
+            const subMenuContent = button.nextElementSibling;
+            if (!button.contains(e.target) && !subMenuContent.contains(e.target)) {
+                subMenuContent.classList.add('hidden');
+            }
+        });
+    });
+});
+
