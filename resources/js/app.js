@@ -1,4 +1,5 @@
 import './bootstrap';
+import './dashboardCharts';
 
 document.addEventListener('DOMContentLoaded', function() {
     const successMessage = document.getElementById('success-message');
