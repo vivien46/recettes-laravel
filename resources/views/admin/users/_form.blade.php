@@ -20,6 +20,11 @@
     <input type="text" id="pseudo" name="pseudo" value="{{ old('pseudo', $user->pseudo ?? '') }}" class="border rounded w-full py-2 px-3">
 </div>
 
+<div class="mb-4">
+    <label for="date_naissance" class="block text-gray-700">Date de naissance</label>
+    <input type="date" id="date_naissance" name="date_naissance" value="{{ old('date_naissance', $user->date_naissance ?? '') }}" class="border rounded w-full py-2 px-3">
+</div>
+
 @if (!isset($user)) <!-- Mot de passe seulement lors de la création -->
     <div class="mb-4">
         <label for="password" class="block text-gray-700">Mot de passe</label>

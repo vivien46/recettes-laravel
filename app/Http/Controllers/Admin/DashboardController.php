@@ -37,7 +37,7 @@ class DashboardController extends Controller
         }
 
         // Afficher la part de recettes par type de recette
-        $recipeTypes = ['entree', 'plat', 'dessert', 'boisson'];
+        $recipeTypes = ['entree', 'plat', 'dessert', 'boisson', 'autre'];
         $recipeTypeData = [];
 
         foreach ($recipeTypes as $type) {

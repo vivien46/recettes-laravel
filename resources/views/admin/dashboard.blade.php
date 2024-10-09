@@ -100,13 +100,13 @@
 </div>
 
 <!-- Section pour afficher les graphiques -->
-<div class="mt-8">
+<div class="mt-8 mb-12">
     <h2 class="text-xl font-bold mb-4 text-center">Statistiques Mensuelles</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Graphique pour les recettes -->
         <div class="bg-white p-6 rounded-lg shadow-md">
             <h3 class="text-lg font-bold mb-2">Recettes par mois</h3>
-            <canvas id="recipesChart" width="400" height="200" data-months="{{ json_encode($months) }}" data-recipes="{{ json_encode($recipeData) }}">
+            <canvas id="recipesChart" width="400" height="400" data-months="{{ json_encode($months) }}" data-recipes="{{ json_encode($recipeData) }}">
             </canvas>
         </div>
 

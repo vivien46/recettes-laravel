@@ -10,6 +10,7 @@ const getDarkColors = () => [
     '#36A2EB', // Bleu foncé
     '#FFCE56', // Jaune foncé
     '#4BC0C0', // Vert foncé
+    '#9966FF', // Violet foncé
 ];
 
 // Graphique de répartition des recettes par mois
@@ -31,6 +32,14 @@ document.addEventListener('DOMContentLoaded', function () {
             options: {
                 responsive: true,
                 scales: {
+                    x: {
+                        ticks: {
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            }
+                        },
+                    },
                     y: {
                         beginAtZero: true,
                         ticks: {
@@ -62,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             label: function(context) {
                                 const label = context.dataset.label || '';
                                 const value = context.raw || 0;
-                                return `${label}: ${value}`;
+                                return ` ${label}: ${value}`;
                             }
                         }
                     }
@@ -123,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             weight: 'bold',
                             size: 16,
                         },
-                        offset: 10,
+                        offset: 14,
                         padding: {
                             top: 10,
                             bottom: 10
