@@ -82,6 +82,11 @@
                             @endforeach
                         </ul>
                     @endif
+                    @if($recipe->steps->count() > 2)
+                        <div class='flex align-center justify-center text-lg'>
+                            ...
+                        </div>
+                    @endif
                 </div>
 
                 <!-- Boutons d'action -->

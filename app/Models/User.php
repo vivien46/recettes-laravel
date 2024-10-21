@@ -62,4 +62,16 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->role === 'admin';
     }
+
+    public function setRoleAttribute($value)
+    {
+        $allowedRoles = ['user', 'admin'];
+
+        if (in_array($value, $allowedRoles)) {
+            $this->attributes['role'] = $value;
+        } else {
+            $this->attributes['role'] = 'user';
+        }
+
+    }
 }
