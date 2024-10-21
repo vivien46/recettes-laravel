@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container mx-auto p-6 w-full">
-    <h1 class="text-3xl font-bold mb-6">Liste des Ingrédients</h1>
+    <h1 class="xs:text-base sm:text-2xl md:text-3xl font-bold mb-6">Liste des Ingrédients</h1>
 
     <div class="mb-4">
         <a href="{{ route('ingredients.create') }}" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">

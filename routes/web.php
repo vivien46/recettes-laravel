@@ -30,7 +30,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // Recettes protégées par auth et vérification d'e-mail
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/recettes/create', [RecetteController::class, 'create'])->name('recettes.create');
     Route::get('/recettes/{id}', [RecetteController::class, 'show'])->name('recettes.show');
     Route::get('/recettes/{id}/edit', [RecetteController::class, 'edit'])->name('recettes.edit');

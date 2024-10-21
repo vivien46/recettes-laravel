@@ -6,12 +6,12 @@
     <title>@yield('title', 'Mon site Laravel')</title>
     @vite('resources/css/app.css')
 </head>
-<body class="bg-gray-100 flex flex-col min-h-screen">
+<body class="bg-gray-100 flex flex-col min-h-screen min-w-min">
 
     <!-- Inclure la barre de navigation -->
     @include('layouts.navbar')
 
-    <div class="parallax-header">
+    <div class="parallax-header bg-cover bg-center h-64 sm:h-80 md:h-96">
     </div>
 
     <!-- Contenu principal -->

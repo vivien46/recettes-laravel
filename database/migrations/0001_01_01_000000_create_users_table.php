@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('pseudo')->nullable();
             $table->date('date_naissance')->nullable();
             $table->string('email')->unique();
+            $table->string('profil_image')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('mot_de_passe');
             $table->rememberToken();

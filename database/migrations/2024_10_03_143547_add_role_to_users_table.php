@@ -12,20 +12,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-
-        DB::statement("DO $$ BEGIN
-        IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'role_enum') THEN
-            CREATE TYPE role_enum AS ENUM ('user', 'admin');
-        END IF;
-        END$$;");
-
         Schema::table('users', function (Blueprint $table) {
-            $table->string('role')->after('mot_de_passe')->default('user');
+            $table->string('role')->default('user')->after('mot_de_passe');
         });
-        
-        DB::statement("ALTER TABLE users ALTER COLUMN role DROP DEFAULT");
-        DB::statement("ALTER TABLE users ALTER COLUMN role TYPE role_enum USING role::role_enum");
-        DB::statement("ALTER TABLE users ALTER COLUMN role SET DEFAULT 'user'");
     }
 
     /**
@@ -33,8 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        DB::statement("ALTER TABLE users ALTER COLUMN role TYPE VARCHAR(255)");
-        DB::statement("DROP TYPE IF EXISTS role_enum");
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('role');
         });
