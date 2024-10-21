@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
             searchInput.value = '';
         }
     } else {
-        console.warn("Éléments de recherche d'ingrédients non trouvés dans le DOM.");
+        // console.warn("Éléments de recherche d'ingrédients non trouvés dans le DOM.");
     }
 
     // ================== Gestion du dropdown ==================
@@ -193,4 +193,21 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    const burgerButton = document.getElementById('burgerButton');
+    const burgerMenu = document.getElementById('burgerMenu');
+
+    burgerButton.addEventListener('click', function () {
+        burgerMenu.classList.toggle('hidden');
+    });
+
+    // Close burger menu when clicking outside of it
+    document.addEventListener('click', function (event) {
+        if (!burgerButton.contains(event.target) && !burgerMenu.contains(event.target)) {
+            burgerMenu.classList.add('hidden');
+        }
+    });
+});
+
 
