@@ -1,7 +1,7 @@
 <nav class="bg-gray-800 p-4 md:p-3">
-    <div class="container mx-auto flex items-center justify-between flex-wrap md:flex-nowrap">
+    <div class="container mx-auto flex items-center justify-between flex-wrap md:flex-nowrap md:p-4">
         <!-- Section gauche : Accueil et Administration (visible uniquement sur écrans moyens et larges) -->
-        <div class="hidden md:flex items-center space-x-4 md:space-x-6">
+        <div class="hidden md:flex items-center space-x-4 md:space-x-6 sm:text-sm md:text-base xl:text-xl">
             <a href="{{ route('home') }}" class="text-white font-bold">Accueil</a>
 
             @if(auth()->check() && auth()->user()->role === 'admin')
@@ -10,7 +10,7 @@
                     <button id="adminMenuButton" class="text-white font-bold focus:outline-none">
                         Administration
                     </button>
-                    <div id="adminMenuDropdown" class="absolute hidden bg-gray-700 shadow-lg rounded-md mt-2 z-50 w-48 dropdown-content">
+                    <div id="adminMenuDropdown" class="absolute hidden bg-gray-700 shadow-lg rounded-md top-16 md:top-14 z-50 w-48 dropdown-content">
                         <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 text-white hover:bg-indigo-500 hover:rounded-md">Dashboard Admin</a>
 
                         <!-- Sous-menu Gestion des utilisateurs -->
@@ -51,9 +51,9 @@
         </div>
 
        <!-- Section droite : informations utilisateur, déconnexion et menu burger pour mobile -->
-<div class="flex items-center space-x-4 md:space-x-6 ml-auto">
+<div class="flex items-center space-x-4 md:space-x-6 ml-auto sm:text-sm md:text-base xl:text-xl">
     @if(auth()->check())
-        <span class="text-white sm:text-sm flex items-center">
+        <span class="text-white sm:text-sm md:text-base xl:text-xl flex items-center">
             Bienvenue, {{ auth()->user()->pseudo }}
             @if(auth()->user()->role === 'admin')
                 <span class="bg-red-500 text-white px-2 py-1 rounded-lg ml-2 flex items-center">
