@@ -194,6 +194,24 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+    // Sélection des éléments
+    var userMenuButton = document.getElementById('userMenuButton');
+    var userMenuDropdown = document.getElementById('userMenuDropdown');
+
+    // Afficher/Masquer le menu dropdown au clic
+    userMenuButton.addEventListener('click', function() {
+        userMenuDropdown.classList.toggle('hidden');
+    });
+
+    // Fermer le dropdown si on clique en dehors
+    window.addEventListener('click', function(e) {
+        if (!userMenuButton.contains(e.target) && !userMenuDropdown.contains(e.target)) {
+            userMenuDropdown.classList.add('hidden');
+        }
+    });
+});
+
 document.addEventListener('DOMContentLoaded', function () {
     const burgerButton = document.getElementById('burgerButton');
     const burgerMenu = document.getElementById('burgerMenu');

@@ -74,4 +74,9 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
     }
+
+    public function recipes()
+    {
+        return $this->hasMany(Recipe::class);
+    }
 }
