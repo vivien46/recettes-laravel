@@ -16,21 +16,8 @@ Route::get('/', function () {
 
 Route::get('/recettes', [RecetteController::class, 'index'])->name('recettes.index');
 
-// Routes pour la vérification des emails
-Route::middleware(['auth'])->group(function () {
-    Route::get('/email/verify', [VerificationController::class, 'notice'])
-        ->name('verification.notice');
-
-    Route::post('/email/verification-notification', [VerificationController::class, 'resend'])
-        ->name('verification.send');
-
-    Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])
-        ->middleware(['signed'])
-        ->name('verification.verify');
-});
-
 // Recettes protégées par auth et vérification d'e-mail
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/recettes/create', [RecetteController::class, 'create'])->name('recettes.create');
     Route::get('/recettes/{id}', [RecetteController::class, 'show'])->name('recettes.show');
     Route::get('/recettes/{id}/edit', [RecetteController::class, 'edit'])->name('recettes.edit');
@@ -53,7 +40,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // Routes pour les utilisateurs (protégées par vérification d'e-mail également)
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth','verified'])->group(function () {
     Route::get('/profile/{id}', [App\Http\Controllers\UserController::class, 'show'])->name('users.show');
     Route::get('/profile/{id}/edit', [App\Http\Controllers\UserController::class, 'edit'])->name('users.edit');
     Route::put('/profile/{id}', [App\Http\Controllers\UserController::class, 'update'])->name('users.update');

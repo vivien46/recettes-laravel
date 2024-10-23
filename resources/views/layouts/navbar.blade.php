@@ -81,14 +81,6 @@
                     </form>
                 </div>
             </div>
-
-            <!-- Bouton Déconnexion (affiché sur desktop seulement) -->
-            {{-- <form action="{{ route('logout') }}" method="POST" class="hidden md:block text-white bg-transparent hover:underline focus:outline-none ml-4">
-            @csrf
-            <button type="submit">
-                Déconnexion
-            </button>
-            </form> --}}
             @else
             <!-- Si l'utilisateur n'est pas connecté -->
             <a href="{{ route('login') }}" class="text-white hover:underline">Connexion</a>

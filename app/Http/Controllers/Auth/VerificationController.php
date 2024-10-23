@@ -17,7 +17,7 @@ class VerificationController extends Controller
     {
         $request->fulfill();
 
-        return redirect('/')->with('success', 'Email vérifié avec succès');
+        return redirect()->route('login')->with('success', 'Email vérifié avec succès, vous pouvez maintenant vous connecter');
     }
 
     public function resend(Request $request)
