@@ -5,9 +5,6 @@
         "dev": "vite",
         "build": "vite build"
     },
-    "devDependencies": {
-        
-    },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^6.6.0",
         "chart.js": "^4.4.4",
