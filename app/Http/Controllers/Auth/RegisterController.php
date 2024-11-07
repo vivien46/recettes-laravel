@@ -8,6 +8,7 @@ use App\Mail\VerifyEmailFrench;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use App\Events\UserRegistered;
 
 class RegisterController extends Controller
 {
@@ -39,6 +40,9 @@ class RegisterController extends Controller
 
         // Envoyer l'email de vérification personnalisé
         Mail::to($user->email)->send(new VerifyEmailFrench($user));
+
+        // Déclancher un événement pour créer le dossier de l'utilisateur
+        event(new UserRegistered($user));
 
         return redirect()->route('login')->with('success', 'Veuillez activer votre compte avant de vous connecter.');
     }

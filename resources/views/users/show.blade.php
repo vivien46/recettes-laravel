@@ -10,8 +10,8 @@ Profile {{ in_array(strtolower(substr($user->pseudo, 0, 1)), ['a', 'e', 'i', 'o'
     <div class="bg-white shadow-md rounded-lg p-4 w-full mx-auto md:w-3/4 lg:w-2/3 xl:w-1/2">
         <div class="flex flex-col items-center">
             <!-- Image de profil de l'utilisateur -->
-            @if($user->profile_image)
-            <img src="{{ asset('storage/' . $user->profile_image) }}" alt="Image profil {{ $user->pseudo }}" class="w-32 h-32 rounded-full object-cover mb-4">
+            @if($user->profil_image)
+            <img src="{{ asset('storage/' . $user->profil_image) }}" alt="Image profil {{ $user->pseudo }}" class="w-32 h-32 rounded-full object-cover mb-4">
             @else
             <img src="https://picsum.photos/200/200" alt="image profile {{ $user->pseudo}}" class="w-32 h-32 rounded-full object-cover mb-4">
             @endif

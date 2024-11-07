@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -59,15 +60,37 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $validatedData = $request->validate([
+            'pseudo' => 'required|string|max:255|unique:users,pseudo,' . $id,
             'nom' => 'required|string|max:255',
             'prenom' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
             'date_naissance' => 'required|date',
+            'profil_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048|dimensions:min_width=100,min_height=100,max_width=1000,max_height=1000',
+        ], [
+            'profil_image.image' => 'Le fichier doit être une image',
+            'profil_image.mimes' => 'Le fichier doit être de type jpeg, png, jpg ou webp',
+            'profil_image.max' => 'L\'image ne doit pas dépasser 2 Mo',
+            'profil_image.dimensions' => 'L\'image doit avoir une taille minimale de 100x100 pixels et maximale de 1000x1000 pixels',
         ]);
 
+
         $user = User::findOrFail($id);
-        $user->update($request->all());
+
+        // Gestion de l'image de profil
+        if ($request->hasFile('profil_image')) {
+            // Supprimer l'ancienne image de profil si elle existe
+            if ($user->profil_image) {
+                Storage::disk('public')->delete($user->profil_image);
+            }
+
+            // Enregistrer la nouvelle image de profil
+            $imagePath = $request->file('profil_image')->store('Users/Profiles/' . $user->pseudo, 'public');
+            $user->profil_image = $imagePath;
+        }
+
+        $user->update($validatedData);
+        
         return redirect()->route('users.show', $user->id)->with('success', 'Profil mis à jour avec succès');
     }
 

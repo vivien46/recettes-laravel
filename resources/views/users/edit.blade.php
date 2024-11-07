@@ -22,25 +22,25 @@ Modifier le profile {{ in_array(strtolower(substr($user->pseudo, 0, 1)), ['a', '
         </div>
         @endif
 
-        <form action="{{ route('users.update', $user->id) }}" method="POST">
+        <form action="{{ route('users.update', $user->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
-            @if ($user->profile_image)
+            @if ($user->profil_image)
             <div class="mb-4">
-                <label for="profile_image" class="block text-gray-700 mb-2">Image actuelle du profile</label>
+                <label for="profil_image" class="block text-gray-700 mb-2">Image actuelle du profile</label>
                 <div class="flex items-center space-x-4">
-                    <img src="{{ asset('storage/' . $user->profile_image) }}" alt="Profile image" class="w-32 h-32 object-cover rounded-full border">
+                    <img src="{{ asset('storage/' . $user->profil_image) }}" alt="Profile image" class="w-32 h-32 object-cover rounded-full border">
                     <div>
-                        <label for="profile_image" class="block text-gray-700">Changer l'image du profile</label>
-                        <input type="file" name="profile_image" id="profile_image" class="mt-1">
+                        <label for="profil_image" class="block text-gray-700">Changer l'image du profile</label>
+                        <input type="file" name="profil_image" id="profil_image" class="mt-1">
                     </div>
                 </div>
             </div>
             @else
             <div class="mb-4">
-                <label for="profile_image" class="block text-gray-700">Image du profile</label>
-                <input type="file" name="profile_image" id="profile_image" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-indigo-500">
+                <label for="profil_image" class="block text-gray-700">Image du profile</label>
+                <input type="file" name="profil_image" id="profil_image" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-indigo-500">
             </div>
             @endif
 

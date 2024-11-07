@@ -1,7 +1,7 @@
 <nav class="bg-gray-800 p-4 md:p-3">
-    <div class="container mx-auto flex items-center justify-between flex-wrap md:flex-nowrap md:p-4">
+    <div class="container mx-auto flex items-center justify-between flex-wrap md:flex-nowrap md:p-3">
         <!-- Section gauche : Accueil et Administration (visible uniquement sur écrans moyens et larges) -->
-        <div class="hidden md:flex items-center space-x-4 md:space-x-6 sm:text-sm md:text-base xl:text-xl">
+        <div class="hidden md:flex items-center space-x-4 md:space-x-6 sm:text-lg md:text-xl xl:text-2xl">
             <a href="{{ route('home') }}" class="text-white font-bold">Accueil</a>
 
             @if(auth()->check() && auth()->user()->role === 'admin')
@@ -51,12 +51,12 @@
         </div>
 
         <!-- Section droite : informations utilisateur, déconnexion et menu burger pour mobile -->
-        <div class="flex items-center space-x-4 md:space-x-6 ml-auto sm:text-sm md:text-base xl:text-xl">
+        <div class="flex items-center space-x-4 md:space-x-6 ml-auto sm:text-lg md:text-xl xl:text-2xl">
             @if(auth()->check())
             <!-- Pseudo utilisateur avec dropdown -->
             <div class="relative">
-                <span id="userMenuButton" class="text-white text-bold md:text-base lg:text-lg xl:text-xl flex items-center cursor-pointer">
-                    Bienvenue, {{ auth()->user()->pseudo}} <img src="{{ auth()->user()->profile_image ? auth()->user()->profile_image : 'https://picsum.photos/200/300' }}" alt="Avatar de {{ auth()->user()->pseudo }}" class="w-8 h-8 rounded-full ml-2">
+                <span id="userMenuButton" class="text-white text-bold lg:text-lg xl:text-xl flex items-center cursor-pointer">
+                    Bienvenue, {{ auth()->user()->pseudo}} <img src="{{ auth()->user()->profil_image ? asset('storage/' . auth()->user()->profil_image) : 'https://picsum.photos/200/300' }}" alt="Avatar de {{ auth()->user()->pseudo }}" class="w-10 h-10 rounded-full ml-2">
                     @if(auth()->user()->role === 'admin')
                     <span class="bg-red-500 text-white px-2 py-1 rounded-lg ml-2 flex items-center">
                         <i class="fa-solid fa-crown text-yellow-300 mr-1"></i>
@@ -66,7 +66,7 @@
                 </span>
 
                 <!-- Menu dropdown pour le profil utilisateur -->
-                <div id="userMenuDropdown" class="absolute hidden bg-gray-700 shadow-lg rounded-md top-16 md:top-16 md:right-0 z-50 w-48">
+                <div id="userMenuDropdown" class="absolute hidden bg-gray-700 shadow-lg rounded-md top-16 md:right-0 z-50 w-48">
                     <a href="{{ route('users.show', auth()->user()->id) }}" class="block px-4 py-2 text-white hover:bg-indigo-500 hover:rounded-md">
                         <i class="fas fa-user mr-2"></i> Voir le profil
                     </a>
