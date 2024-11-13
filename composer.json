@@ -6,7 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "laravel/framework": "^11.26",
+        "laravel/framework": "^11.31.0",
         "laravel/tinker": "^2.9",
         "symfony/http-foundation": "7.1.7",
         "symfony/process": "7.1.7"
