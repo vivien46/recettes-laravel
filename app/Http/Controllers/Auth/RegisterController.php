@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Events\UserRegistered;
+use App\Notifications\VerifyEmailNotification;
 
 class RegisterController extends Controller
 {
@@ -38,8 +39,8 @@ class RegisterController extends Controller
             'role' => 'user',
         ]);
 
-        // Envoyer l'email de vérification personnalisé
-        Mail::to($user->email)->send(new VerifyEmailFrench($user));
+        // Envoyer l'email de notificaton
+        $user->notify(new VerifyEmailNotification($user));
 
         // Déclancher un événement pour créer le dossier de l'utilisateur
         event(new UserRegistered($user));

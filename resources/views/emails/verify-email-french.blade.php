@@ -24,6 +24,8 @@ Avant de continuer, merci de cliquer sur le bouton ci-dessous pour vérifier vot
 Si vous n'arrivez pas à cliquer sur le bouton, copiez-collez le lien suivant dans votre navigateur: [{{ $url }}]({{ $url }})
 [Cliquez ici]({{$url}})
 
+<p>Le lien de vérification expirera dans <bold>4 heures</bold>.</p>
+
 Merci,<br>
 L'équipe de {{ config('app.name') }}
     
