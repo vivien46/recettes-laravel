@@ -8,6 +8,7 @@
         "php": "^8.2",
         "laravel/framework": "^11.31.0",
         "laravel/tinker": "^2.9",
+        "league/commonmark": "2.6",
         "symfony/http-foundation": "7.1.7",
         "symfony/process": "7.1.7"
     },
