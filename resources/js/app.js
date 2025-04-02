@@ -9,6 +9,24 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 5000); // Masquer après 5 secondes
     }
 
+    // ================== Gestion de l'affichage/masquage du mot de passe ==================
+    document.querySelectorAll('.toggle-password').forEach(toggle => {
+        toggle.addEventListener('click', () => {
+            const input = toggle.previousElementSibling;
+            const icon = toggle.querySelector('i');
+    
+            if (input && input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else if (input) {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+    });
+
     // ================== Gestion des étapes dynamiques ==================
     const stepsContainer = document.getElementById('steps-container');
     const addStepButton = document.getElementById('add-step');

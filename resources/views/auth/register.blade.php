@@ -44,15 +44,21 @@
             <input type="email" id="email" name="email" value="{{ old('email') }}" class="w-full border border-gray-300 p-2 rounded-lg" required>
         </div>
 
-        <div class="mb-4">
-            <label for="mot_de_passe" class="block text-gray-700">Mot de passe</label>
-            <input type="password" id="mot_de_passe" name="mot_de_passe" class="w-full border border-gray-300 p-2 rounded-lg" required>
-        </div>
+        <div class="mb-4 relative">
+    <label for="mot_de_passe" class="block text-gray-700">Mot de passe</label>
+    <input type="password" id="mot_de_passe" name="mot_de_passe" class="w-full border border-gray-300 p-2 pr-10 rounded-lg" required>
+    <span class="absolute right-3 top-2/3 transform -translate-y-1/2 text-gray-500 cursor-pointer toggle-password">
+        <i class="fas fa-eye"></i>
+    </span>
+</div>
 
-        <div class="mb-4">
-            <label for="mot_de_passe_confirmation" class="block text-gray-700">Confirmer le mot de passe</label>
-            <input type="password" id="mot_de_passe_confirmation" name="mot_de_passe_confirmation" class="w-full border border-gray-300 p-2 rounded-lg" required>
-        </div>
+<div class="mb-4 relative">
+    <label for="mot_de_passe_confirmation" class="block text-gray-700">Confirmer le mot de passe</label>
+    <input type="password" id="mot_de_passe_confirmation" name="mot_de_passe_confirmation" class="w-full border border-gray-300 p-2 pr-10 rounded-lg" required>
+    <span class="absolute right-3 top-2/3 transform -translate-y-1/2 text-gray-500 cursor-pointer toggle-password">
+        <i class="fas fa-eye"></i>
+    </span>
+</div>
 
         <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition-colors">S'inscrire</button>
     </form>
