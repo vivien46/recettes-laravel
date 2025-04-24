@@ -32,5 +32,10 @@ RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html/storage \
     && chmod -R 755 /var/www/html/bootstrap/cache
 
+RUN mkdir -p /var/www/html/storage/logs && \
+    touch /var/www/html/storage/logs/laravel.log && \
+    chmod -R 775 /var/www/html/storage && \
+    chmod -R 775 /var/www/html/bootstrap/cache
+
 EXPOSE 8080
 CMD ["apache2-foreground"]
