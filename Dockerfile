@@ -1,9 +1,7 @@
+# Étape 1 : PHP avec Apache
 FROM php:8.2-apache
 
-# Configuration Apache pour Laravel (DocumentRoot sur public + port 8080)
-COPY ./my_apache.conf /etc/apache2/sites-available/000-default.conf
-
-# Installer PHP & Node
+# Étape 2 : Installer les extensions PHP et Node.js
 RUN apt-get update && apt-get install -y \
     libpng-dev libjpeg-dev libpq-dev libzip-dev zip unzip curl gnupg \
     && docker-php-ext-install pdo pdo_pgsql zip gd \
@@ -12,32 +10,31 @@ RUN apt-get update && apt-get install -y \
     && npm install -g npm@latest \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Activer modules Apache
+# Étape 3 : Activer les modules Apache nécessaires
 RUN a2enmod rewrite headers
 
-# Installer Composer
+# Étape 4 : Copier la config Apache personnalisée
+COPY ./my_apache.conf /etc/apache2/sites-available/000-default.conf
+
+# Étape 5 : Installer Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copier Laravel
+# Étape 6 : Copier le code Laravel
 WORKDIR /var/www/html
 COPY . .
 
-# Installer dépendances Laravel + builder Vite
+# Étape 7 : Installer les dépendances Laravel
 RUN composer install --no-dev --optimize-autoloader \
     && npm install \
     && npm run build
 
-# Fixer les droits
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html/storage \
-    && chmod -R 755 /var/www/html/bootstrap/cache
+# Étape 8 : Préparer Laravel
+RUN mkdir -p storage/logs \
+    && touch storage/logs/laravel.log \
+    && chmod -R 777 storage bootstrap/cache \
+    && php artisan config:clear \
+    && php artisan config:cache
 
-RUN mkdir -p /var/www/html/storage/logs && \
-    touch /var/www/html/storage/logs/laravel.log && \
-    chmod -R 775 /var/www/html/storage && \
-    chmod -R 775 /var/www/html/bootstrap/cache
-
-RUN php artisan config:clear && php artisan config:cache
-
+# Étape 9 : Cloud Run écoute uniquement sur 8080
 EXPOSE 8080
 CMD ["apache2-foreground"]
