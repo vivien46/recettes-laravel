@@ -37,5 +37,7 @@ RUN mkdir -p /var/www/html/storage/logs && \
     chmod -R 775 /var/www/html/storage && \
     chmod -R 775 /var/www/html/bootstrap/cache
 
+RUN php artisan config:clear && php artisan config:cache
+
 EXPOSE 8080
 CMD ["apache2-foreground"]

@@ -7,12 +7,14 @@ use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Middleware\EnsureAdmin;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
+use Illuminate\Support\Facades\Log;
 
 require __DIR__ . '/auth.php';
 
 Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+    Log::info('✅ Cloud Run fonctionne');
+    return 'Bienvenue sur Laravel via Cloud Run 🎉';
+});
 
 Route::get('/recettes', [RecetteController::class, 'index'])->name('recettes.index');
 
