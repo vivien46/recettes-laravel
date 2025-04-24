@@ -11,21 +11,17 @@ RUN apt-get update && apt-get install -y \
 # Installer Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copier ton projet
 WORKDIR /var/www/html
 COPY . .
 
-# Installer dépendances
+# Installer dépendances Laravel + Vite + builder Vite
 RUN composer install --no-dev --optimize-autoloader \
     && npm install \
-    && npm run build
+    && npm run build \
+    && php artisan config:clear \
+    && php artisan config:cache \
+    && mkdir -p storage/logs && touch storage/logs/laravel.log \
+    && chmod -R 777 storage bootstrap/cache
 
-# Préparer Laravel
-RUN mkdir -p storage/logs && \
-    touch storage/logs/laravel.log && \
-    chmod -R 777 storage bootstrap/cache && \
-    php artisan config:clear && \
-    php artisan config:cache
-
-# Exposer le bon port
 EXPOSE 8080
+CMD php artisan serve --host=0.0.0.0 --port=8080
