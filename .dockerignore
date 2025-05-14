@@ -1,0 +1,10 @@
+.git
+.gitignore
+node_modules
+.env
+.env.example
+*.log
+phpunit.xml
+docker-compose.yml
+tests/
+README.md
