@@ -25,37 +25,73 @@ Route::view('/', 'welcome')->name('home');
 
 // Recettes (public)
 Route::get('/recettes', [RecetteController::class, 'index'])->name('recettes.index');
-Route::get('/recettes/{id}', [RecetteController::class, 'show'])->name('recettes.show');
 
 // Routes protégées (auth + verified)
 Route::middleware(['auth', 'verified'])->group(function () {
 
     // Recettes
     Route::get('/recettes/create', [RecetteController::class, 'create'])->name('recettes.create');
-    Route::get('/recettes/{id}/edit', [RecetteController::class, 'edit'])->name('recettes.edit');
+
+    Route::get('/recettes/{id}/edit', [RecetteController::class, 'edit'])
+        ->whereNumber('id')
+        ->name('recettes.edit');
 
     Route::post('/recettes', [RecetteController::class, 'store'])->name('recettes.store');
-    Route::put('/recettes/{id}', [RecetteController::class, 'update'])->name('recettes.update');
-    Route::delete('/recettes/{id}', [RecetteController::class, 'destroy'])->name('recettes.destroy');
+
+    Route::put('/recettes/{id}', [RecetteController::class, 'update'])
+        ->whereNumber('id')
+        ->name('recettes.update');
+
+    Route::delete('/recettes/{id}', [RecetteController::class, 'destroy'])
+        ->whereNumber('id')
+        ->name('recettes.destroy');
 
     // Ingrédients
     Route::get('/ingredients', [IngredientController::class, 'index'])->name('ingredients.index');
     Route::get('/ingredients/search', [IngredientController::class, 'search'])->name('ingredients.search');
 
     Route::get('/ingredients/create', [IngredientController::class, 'create'])->name('ingredients.create');
-    Route::get('/ingredients/{id}', [IngredientController::class, 'show'])->name('ingredients.show');
-    Route::get('/ingredients/{id}/edit', [IngredientController::class, 'edit'])->name('ingredients.edit');
+
+    Route::get('/ingredients/{id}', [IngredientController::class, 'show'])
+        ->whereNumber('id')
+        ->name('ingredients.show');
+
+    Route::get('/ingredients/{id}/edit', [IngredientController::class, 'edit'])
+        ->whereNumber('id')
+        ->name('ingredients.edit');
 
     Route::post('/ingredients', [IngredientController::class, 'store'])->name('ingredients.store');
-    Route::put('/ingredients/{id}', [IngredientController::class, 'update'])->name('ingredients.update');
-    Route::delete('/ingredients/{id}', [IngredientController::class, 'destroy'])->name('ingredients.destroy');
+
+    Route::put('/ingredients/{id}', [IngredientController::class, 'update'])
+        ->whereNumber('id')
+        ->name('ingredients.update');
+
+    Route::delete('/ingredients/{id}', [IngredientController::class, 'destroy'])
+        ->whereNumber('id')
+        ->name('ingredients.destroy');
 
     // Profil utilisateur
-    Route::get('/profile/{id}', [UserController::class, 'show'])->name('users.show');
-    Route::get('/profile/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
-    Route::put('/profile/{id}', [UserController::class, 'update'])->name('users.update');
-    Route::delete('/profile/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+    Route::get('/profile/{id}', [UserController::class, 'show'])
+        ->whereNumber('id')
+        ->name('users.show');
+
+    Route::get('/profile/{id}/edit', [UserController::class, 'edit'])
+        ->whereNumber('id')
+        ->name('users.edit');
+
+    Route::put('/profile/{id}', [UserController::class, 'update'])
+        ->whereNumber('id')
+        ->name('users.update');
+
+    Route::delete('/profile/{id}', [UserController::class, 'destroy'])
+        ->whereNumber('id')
+        ->name('users.destroy');
 });
+
+// Recettes (public) -> show placé après + contrainte numérique
+Route::get('/recettes/{id}', [RecetteController::class, 'show'])
+    ->whereNumber('id')
+    ->name('recettes.show');
 
 // Admin
 Route::middleware([EnsureAdmin::class])
