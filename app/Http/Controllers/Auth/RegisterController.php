@@ -27,6 +27,18 @@ class RegisterController extends Controller
             'date_naissance' => 'required|date',
             'email' => 'required|email|unique:users',
             'mot_de_passe' => 'required|string|min:8|confirmed',
+       ],[
+            'nom.required' => 'Le champ nom est obligatoire.',
+            'prenom.required' => 'Le champ prénom est obligatoire.',
+            'pseudo.required' => 'Le champ pseudo est obligatoire.',
+            'pseudo.unique' => 'Ce pseudo est déjà pris.',
+            'date_naissance.required' => 'Le champ date de naissance est obligatoire.',
+            'email.required' => "Le champ email est obligatoire.",
+            'email.email' => "Le format de l'email est invalide.",
+            'email.unique' => "Cet email est déjà utilisé.",
+            'mot_de_passe.required' => 'Le champ mot de passe est obligatoire.',
+            'mot_de_passe.min' => 'Le mot de passe doit contenir au moins 8 caractères.',
+            'mot_de_passe.confirmed' => 'La confirmation du mot de passe ne correspond pas.',
         ]);
 
         $user = User::create([
