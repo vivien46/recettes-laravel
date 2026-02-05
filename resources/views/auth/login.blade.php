@@ -35,16 +35,20 @@
                 <label for="mot_de_passe" class="block text-gray-700">Mot de passe</label>
                 <div class="relative">
                     <input type="password" id="mot_de_passe" name="mot_de_passe"
-                        class="w-full border border-gray-300 p-2 pr-10 rounded-lg" required>
-                    <span
-                        class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer toggle-password">
-                        <i class="fas fa-eye" id="eye-icon"></i>
-                    </span>
+                        class="w-full border border-gray-300 p-2 pr-12 rounded-lg" required>
+
+                    <button type="button"
+                        class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                        id="togglePassword">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
                 </div>
-                <span><a href="{{ route('password.request') }}" class="text-blue-500 hover:underline">Mot de passe oublié
-                        ?</a></span>
 
             </div>
+            <span><a href="{{ route('password.request') }}" class="text-blue-500 hover:underline">Mot de passe
+                    oublié ?</a></span>
+
+
 
             <button type="submit"
                 class="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition-colors">Se
