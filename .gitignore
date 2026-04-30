@@ -1,9 +1,6 @@
 # Laravel-specific files
 /public/hot
-/public/storage/*
-!/public/storage/assets/
-/public/storage/recettes/*
-!public/storage/recettes/.gitkeep
+/public/storage/
 /storage/*.key
 /vendor
 /bootstrap/cache/*
